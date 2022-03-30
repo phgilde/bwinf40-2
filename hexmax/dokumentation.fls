@@ -1,0 +1,271 @@
+PWD C:\Users\Philip\Documents\programmieren\python\bwinf40-2\hexmax
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\miktex\data\le\pdftex\pdflatex.fmt
+INPUT dokumentation.tex
+OUTPUT dokumentation.log
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrartcl.cls
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrartcl.cls
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrkbase.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrkbase.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrbase.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrbase.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrlfile.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrlfile.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\tocbasic.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\tocbasic.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrsize10pt.clo
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrsize10pt.clo
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\typearea.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\typearea.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\switch.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-german\ngerman.ldf
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-german\ngerman.ldf
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-german\ngerman.ldf
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-german\ngermanb.ldf
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\txtbabel.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\fontenc.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\fontenc.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1enc.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1enc.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecrm1000.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inputenc.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inputenc.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\utf8x.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\utf8x.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\ucs.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\ucs.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\uni-global.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\uni-global.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrlayer-scrpage.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrlayer-scrpage.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrlayer.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrlayer.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lastpage\lastpage.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lastpage\lastpage.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\titling\titling.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\titling\titling.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amstext.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amstext.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\mathtools\mathtools.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\mathtools\mathtools.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\calc.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\calc.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\mathtools\mhsetup.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\mathtools\mhsetup.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphicx.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphicx.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphics.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphics.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\pdftex.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\pdftex.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithmicx\algpseudocode.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithmicx\algpseudocode.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ifthen.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ifthen.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithmicx\algorithmicx.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithmicx\algorithmicx.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\wrapfig\wrapfig.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\wrapfig\wrapfig.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\csquotes\csquotes.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\csquotes\csquotes.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\etoolbox\etoolbox.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\etoolbox\etoolbox.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\csquotes\csquotes.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\csquotes\csquotes.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\csquotes\csquotes.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\csquotes\csquotes.cfg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\cleveref\cleveref.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\cleveref\cleveref.sty
+INPUT dokumentation.aux
+INPUT dokumentation.aux
+OUTPUT dokumentation.aux
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty
+INPUT dokumentation.out
+INPUT dokumentation.out
+INPUT dokumentation.out
+INPUT dokumentation.out
+INPUT .\dokumentation.out
+INPUT .\dokumentation.out
+OUTPUT dokumentation.out
+OUTPUT dokumentation.pdf
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\bookmark.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\bookmark.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\bkm-pdftex.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\bkm-pdftex.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\ucsencs.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\ucsencs.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\mkii\supp-pdf.mkii
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\mkii\supp-pdf.mkii
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecrm1728.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecbx1728.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecbx2488.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecrm1200.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr12.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr8.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr6.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi12.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi8.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi6.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy10.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy8.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy6.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmex10.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1cmss.fd
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1cmss.fd
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecss1000.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecsx1000.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecsx1440.tfm
+INPUT dokumentation.toc
+INPUT dokumentation.toc
+OUTPUT dokumentation.toc
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\uni-0.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ucs\uni-0.def
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT bilder\ziffereinzel.png
+INPUT .\bilder\ziffereinzel.png
+INPUT .\bilder\ziffereinzel.png
+INPUT .\bilder\ziffereinzel.png
+INPUT .\bilder\ziffereinzel.png
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\pdftex\config\pdftex.map
+INPUT bilder\suchbaum1.jpg
+INPUT .\bilder\suchbaum1.jpg
+INPUT .\bilder\suchbaum1.jpg
+INPUT .\bilder\suchbaum1.jpg
+INPUT .\bilder\suchbaum1.jpg
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecrm0800.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1cmtt.fd
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1cmtt.fd
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ectt0800.tfm
+INPUT bilder\bild1.png
+INPUT .\bilder\bild1.png
+INPUT .\bilder\bild1.png
+INPUT .\bilder\bild1.png
+INPUT .\bilder\bild1.png
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecti1000.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT hexmax.py
+INPUT hexmax.py
+INPUT hexmax.py
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ecrm0500.tfm
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\jknappen\ec\ectt1000.tfm
+INPUT dokumentation.aux
+INPUT .\dokumentation.out
+INPUT .\dokumentation.out
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0500.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0500.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1000.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1000.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1000.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1000.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1440.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1440.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1728.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1728.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk
+INPUT C:\Users\Philip\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi7.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi7.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr7.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr7.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy7.pfb
+INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy7.pfb
