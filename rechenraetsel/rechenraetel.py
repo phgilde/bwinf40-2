@@ -5,6 +5,10 @@ from itertools import product
 from ssl import ALERT_DESCRIPTION_DECOMPRESSION_FAILURE
 
 
+class NotCalculatableException(Exception):
+    pass
+
+
 def calculate(term: list) -> int:
     term = list(term)
     i = 0
@@ -17,6 +21,8 @@ def calculate(term: list) -> int:
             continue
         if term[i] == ":":
             term[i - 1] = term[i - 1] / term[i + 1]
+            if term[i - 1] != int(term[i - 1]):
+                raise NotCalculatableException
             term.pop(i)
             term.pop(i)
             i -= 2
@@ -95,26 +101,30 @@ def is_ambiguous(term):
         ) + [term[-1]]
         if term == alt_term:
             continue
-        if not is_calculatable(alt_term):
-            continue
-        if calculate(alt_term) == calculate(term):
-            return True
+        try:
+            if calculate(alt_term) == calculate(term):
+                return True
+        except NotCalculatableException:
+            pass
     return False
 
 
 def main():
-    length = int(input("Länge: "))
+    try:
+        length = int(input("Länge: "))
 
-    while (
-        not is_calculatable(
-            term := flatten(
-                [(randint(1, 9), choice("+-*:")) for i in range(length)]
-            )[:-1]
-        )
-    ) or is_ambiguous(term):
-        print("failed...")
-    print(term)
-    print(calculate(term))
+        while (
+            not is_calculatable(
+                term := flatten(
+                    [(randint(1, 9), choice("+-*:")) for i in range(length)]
+                )[:-1]
+            )
+        ) or is_ambiguous(term):
+            pass
+        print(term)
+        print(calculate(term))
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == "__main__":
