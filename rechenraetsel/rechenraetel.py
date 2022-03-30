@@ -1,3 +1,5 @@
+import cProfile
+import pstats
 from random import randint, choice
 from itertools import product
 from ssl import ALERT_DESCRIPTION_DECOMPRESSION_FAILURE
@@ -100,15 +102,24 @@ def is_ambiguous(term):
     return False
 
 
-length = int(input("Länge: "))
+def main():
+    length = int(input("Länge: "))
 
-while (
-    not is_calculatable(
-        term := flatten(
-            [(randint(1, 9), choice("+-*:")) for i in range(length)]
-        )[:-1]
-    )
-) or is_ambiguous(term):
-    print("failed...")
-print(term)
-print(calculate(term))
+    while (
+        not is_calculatable(
+            term := flatten(
+                [(randint(1, 9), choice("+-*:")) for i in range(length)]
+            )[:-1]
+        )
+    ) or is_ambiguous(term):
+        print("failed...")
+    print(term)
+    print(calculate(term))
+
+
+if __name__ == "__main__":
+
+    cProfile.run("main()", "restats")
+
+    p = pstats.Stats("restats")
+    p.strip_dirs().sort_stats("time").print_stats(10)
