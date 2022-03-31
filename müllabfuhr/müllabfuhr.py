@@ -38,14 +38,17 @@ class Graph:
 
 
 def shortest_path(graph, start, end):
+    closed_nodes = set()
     paths = [start]
     while (prime_path := min(paths, key=lambda x: graph.path_length(x)))[
         -1
     ] != end:
+        closed_nodes.add(prime_path(-1))
         paths.remove(prime_path)
         paths += [
-            prime_path + [new_vertex]
+            prime_path + [new_vertex.end]
             for new_vertex in graph.connected_nodes(prime_path[-1])
+            if new_vertex.end not in closed_nodes
         ]
     return prime_path
 
