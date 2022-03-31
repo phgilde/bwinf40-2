@@ -1,8 +1,9 @@
 import cProfile
 import pstats
-from random import randint, choice
+from random import randint, choice, seed
 from itertools import product
 from ssl import ALERT_DESCRIPTION_DECOMPRESSION_FAILURE
+seed(42)
 
 
 class NotCalculatableException(Exception):
@@ -19,7 +20,7 @@ def calculate(term: list) -> int:
             term.pop(i)
             i -= 2
             continue
-        if term[i] == ":":
+        if term[i] == "/":
             term[i - 1] = term[i - 1] / term[i + 1]
             if term[i - 1] != int(term[i - 1]):
                 raise NotCalculatableException
@@ -61,7 +62,7 @@ def is_calculatable(term: list) -> bool:
             term.pop(i)
             i -= 2
             continue
-        if term[i] == ":":
+        if term[i] == "/":
             term[i - 1] = term[i - 1] / term[i + 1]
             if term[i - 1] != int(term[i - 1]):
                 return False
@@ -94,8 +95,14 @@ def flatten(list_):
 
 
 def is_ambiguous(term):
+    if len(term) < 3:
+        return False
+    for i in range(len(term))[1::2]:
+        if term[i] in "+-":
+            if is_ambiguous(term[:i]) or is_ambiguous(term[i + 1 :]):
+                return True
     length = (len(term) + 1) // 2
-    for v in product(*["+-*:" for i in range(length - 1)]):
+    for v in product(*["+-*/" for i in range(length - 1)]):
         alt_term = flatten(
             [(term[i], v[i // 2]) for i in range(0, (length - 1) * 2, 2)]
         ) + [term[-1]]
@@ -116,13 +123,14 @@ def main():
         while (
             not is_calculatable(
                 term := flatten(
-                    [(randint(1, 9), choice("+-*:")) for i in range(length)]
+                    [(randint(1, 9), choice("+-*/")) for i in range(length)]
                 )[:-1]
             )
         ) or is_ambiguous(term):
             pass
         print(term)
         print(calculate(term))
+        print(eval("".join(str(x) for x in term)))
     except KeyboardInterrupt:
         pass
 
