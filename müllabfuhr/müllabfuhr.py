@@ -1,54 +1,74 @@
-from dataclasses import dataclass
 from collections import Counter
 
 
-@dataclass
 class Vertex:
-    start: int
-    end: int
-    length: int
+    def __init__(self, id: int):
+        self.id = id
+        self.neighbour_distances = {}
+
+    def add_neighbor(self, neighbor_id: int, distance: int):
+        self.neighbour_distances[neighbor_id] = distance
+
+    def get_neighbors(self) -> list:
+        return self.neighbour_distances.keys()
+
+    def get_distance(self, neighbor_id: int) -> int:
+        return self.neighbour_distances[neighbor_id]
+
+    def get_id(self) -> int:
+        return self.id
 
 
 class Graph:
-    _vertices = {}
-    _distances = {}
+    def __init__(self):
+        self.vertices = {}
 
-    def _add_half_vertex(self, node1, node2, length):
-        if node1 not in self._vertices:
-            self._vertices[node1] = []
-        self._vertices[node1].append(Vertex(node1, node2, length))
+    def add_vertex(self, vertex_id):
+        self.vertices[vertex_id] = Vertex(vertex_id)
 
-    def add_vertex(self, node1, node2, length):
-        self._add_half_vertex(node1, node2, length)
-        self._add_half_vertex(node2, node1, length)
-        self._distances[(node1, node2)] = length
-        self._distances[(node2, node1)] = length
+    def add_edge(self, start, end, distance):
+        self.vertices[start].add_neighbor(end, distance)
+        self.vertices[end].add_neighbor(start, distance)
 
-    def connected_vertices(self, node):
-        return self._vertices[node]
+    def get_vertex(self, vertex_id):
+        return self.vertices[vertex_id]
 
-    def get_distance(self, node1, node2) -> int:
-        return self._distances[(node1, node2)]
-
-    def path_length(self, path: list) -> int:
-        total = 0
-        for i in range(len(path) - 1):
-            total += self.get_distance(path[i], path[i + 1])
-        return total
+    def path_distance(self, path_vertices):
+        distance = 0
+        for i in range(len(path_vertices) - 1):
+            distance += self.get_vertex(path_vertices[i]).get_distance(
+                path_vertices[i + 1]
+            )
+        return distance
 
 
 def shortest_path(graph, start, end):
-    closed_nodes = set()
-    paths = [start]
-    while (prime_path := min(paths, key=lambda x: graph.path_length(x)))[
+    closed_nodes = []
+    paths = [[start]]
+    while (prime_path := min(paths, key=lambda x: graph.path_distance(x)))[
         -1
     ] != end:
-        closed_nodes.add(prime_path(-1))
-        paths.remove(prime_path)
+        closed_nodes.append(prime_path[0])
         paths += [
-            prime_path + [new_vertex.end]
-            for new_vertex in graph.connected_nodes(prime_path[-1])
-            if new_vertex.end not in closed_nodes
+            prime_path + [node]
+            for node in graph.get_vertex(prime_path[-1]).get_neighbors()
+            if node not in closed_nodes
         ]
     return prime_path
 
+
+def read_graph(path):
+    graph = Graph()
+    with open(path) as f:
+        f.readline()
+        while line := f.readline():
+            start, end, distance = line.split(" ")
+            graph.add_vertex(int(start))
+            graph.add_vertex(int(end))
+            graph.add_edge(start, end, distance)
+    return graph
+
+
+def main():
+    path = input("Pfad: ")
+    graph = read_graph(path)
