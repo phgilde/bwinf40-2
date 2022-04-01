@@ -101,11 +101,11 @@ def main():
         new_paths = find_new_paths(graph, prime_path)
         for new_path in new_paths:
             may_add = True
-            for found_path in open_paths | closed_paths:
-                if found_path[-1] == new_path[-1]:
-                    if graph.path_length(found_path) <= graph.path_length(
+            for old_path in open_paths | closed_paths:
+                if old_path[-1] == new_path[-1]:
+                    if graph.path_length(old_path) >= graph.path_length(
                         new_path
-                    ) and set(new_path) <= set(found_path):
+                    ) and set(new_path) <= set(old_path):
                         may_add = False
                         break
 
