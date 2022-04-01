@@ -2,7 +2,7 @@ import cProfile
 import pstats
 from random import randint, choice, seed
 from itertools import product
-from ssl import ALERT_DESCRIPTION_DECOMPRESSION_FAILURE
+from functools import lru_cache
 seed(42)
 
 
@@ -10,7 +10,8 @@ class NotCalculatableException(Exception):
     pass
 
 
-def calculate(term: list) -> int:
+@lru_cache(200000)
+def calculate(term: tuple) -> int:
     term = list(term)
     i = 0
     while i < len(term):
@@ -97,6 +98,17 @@ def flatten(list_):
 def is_ambiguous(term):
     if len(term) < 3:
         return False
+    if len(term) > 6:
+        for i in range(0, len(term)-4, 2):
+            if is_ambiguous(term[i:i+5]):
+                return True
+        for i in range(0, len(term)-2, 2):
+            if is_ambiguous(term[i:i+3]):
+                return True
+    if len(term) > 8:
+        for i in range(0, len(term)-6, 2):
+            if is_ambiguous(term[i:i+7]):
+                return True
     for i in range(len(term))[1::2]:
         if term[i] in "+-":
             if is_ambiguous(term[:i]) or is_ambiguous(term[i + 1 :]):
@@ -109,7 +121,7 @@ def is_ambiguous(term):
         if term == alt_term:
             continue
         try:
-            if calculate(alt_term) == calculate(term):
+            if calculate(tuple(alt_term)) == calculate(tuple(term)):
                 return True
         except NotCalculatableException:
             pass
@@ -129,7 +141,7 @@ def main():
         ) or is_ambiguous(term):
             pass
         print(term)
-        print(calculate(term))
+        print(calculate(tuple(term)))
         print(eval("".join(str(x) for x in term)))
     except KeyboardInterrupt:
         pass
