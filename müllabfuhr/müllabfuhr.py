@@ -56,8 +56,8 @@ class Graph:
             else False
         )
 
-    def edges_equal(self, edges_paths):
-        return edges_paths == self.edges
+    def edges_equal(self, other_edges):
+        return other_edges == self.edges
 
 
 class PathContainer:
