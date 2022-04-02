@@ -4,7 +4,7 @@ from itertools import combinations
 import pstats
 
 
-class Vertex:
+class NodeContainer:
     def __init__(self, id: int):
         self.id = id
         self.neighbour_distances = {}
@@ -24,36 +24,46 @@ class Vertex:
 
 class Graph:
     def __init__(self):
-        self.vertices = {}
+        self.nodes = {}
         self.edges = set()
 
-    def add_vertex(self, vertex_id):
-        if vertex_id not in self.vertices:
-            self.vertices[vertex_id] = Vertex(vertex_id)
+    def add_node(self, node_id):
+        if node_id not in self.nodes:
+            self.nodes[node_id] = NodeContainer(node_id)
 
     def add_edge(self, start, end, distance):
-        self.vertices[start].add_neighbor(end, distance)
-        self.vertices[end].add_neighbor(start, distance)
+        self.nodes[start].add_neighbor(end, distance)
+        self.nodes[end].add_neighbor(start, distance)
         self.edges.add((start, end))
         self.edges.add((end, start))
 
-    def get_vertex(self, vertex_id):
-        return self.vertices[vertex_id]
+    def get_node(self, node_id):
+        return self.nodes[node_id]
 
-    def path_length(self, path_vertices):
+    def path_length(self, path_nodes):
         distance = 0
-        for i in range(len(path_vertices) - 1):
-            distance += self.get_vertex(path_vertices[i]).get_distance(
-                path_vertices[i + 1]
+        for i in range(len(path_nodes) - 1):
+            distance += self.get_node(path_nodes[i]).get_distance(
+                path_nodes[i + 1]
             )
         return distance
 
     def covers_all_edges(self, paths):
-
-        return self.edges_equal(set().union(*paths))
+        return self.edges_equal(set().union(*(path.edges for path in paths)))
 
     def edges_equal(self, edges_paths):
         return edges_paths == self.edges
+
+
+class PathContainer():
+    def __init__(self, graph: Graph, nodes: list):
+        self.nodes = nodes
+        self.graph = graph
+        self.length = graph.path_length(self.nodes)
+        self.edges = edges_from_path(self.nodes)
+
+    def __hash__(self):
+        return hash(self.nodes)
 
 
 def shortest_path(graph, start, end):
@@ -63,14 +73,14 @@ def shortest_path(graph, start, end):
         -1
     ] != end:
         closed_nodes.add(prime_path[0])
-        paths |= find_new_paths(graph, closed_nodes, prime_path)
+        paths |= find_new_paths(closed_nodes, prime_path)
     return prime_path
 
 
-def find_new_paths(graph, prime_path, closed_nodes=[]):
+def find_new_paths(prime_path, closed_nodes=[]):
     return {
-        prime_path + (node,)
-        for node in graph.get_vertex(prime_path[-1]).get_neighbors()
+        PathContainer(prime_path.graph, prime_path.nodes + (node,))
+        for node in prime_path.graph.get_node(prime_path.nodes[-1]).get_neighbors()
         if node not in closed_nodes
     }
 
@@ -89,8 +99,8 @@ def read_graph(path):
         f.readline()
         while line := f.readline():
             start, end, distance = line.split(" ")
-            graph.add_vertex(int(start))
-            graph.add_vertex(int(end))
+            graph.add_node(int(start))
+            graph.add_node(int(end))
             graph.add_edge(int(start), int(end), int(distance))
     return graph
 
@@ -100,32 +110,28 @@ def main():
         file_path = input("Pfad: ")
         graph = read_graph(file_path)
         closed_paths = set()
-        open_paths = {(0,)}
+        open_paths = {PathContainer(graph, (0,))}
         while True:
-            prime_path = min(open_paths, key=lambda x: graph.path_length(x))
+            prime_path = min(open_paths, key=lambda x: x.length)
             open_paths.remove(prime_path)
-            new_paths = find_new_paths(graph, prime_path)
+            new_paths = find_new_paths(prime_path)
             for new_path in new_paths:
                 may_add = True
                 for old_path in open_paths | closed_paths:
-                    if old_path[-1] == new_path[-1]:
-                        if graph.path_length(old_path) >= graph.path_length(
-                            new_path
-                        ) and set(new_path) <= set(old_path):
+                    if old_path.nodes[-1] == new_path.nodes[-1]:
+                        if old_path.length >= new_path.length and set(new_path.nodes) <= set(old_path.nodes):
                             may_add = False
                             break
+                if new_path.nodes[::-1] in open_paths:
+                    may_add = False
 
                 if may_add:
                     open_paths.add(new_path)
-            if prime_path[-1] == 0:
-                prime_edges = edges_from_path(prime_path)
-                closed_edges = (edges_from_path(path) for path in closed_paths)
-                closed_edges_remap = {
-                    frozenset(edges_from_path(path)): path for path in closed_paths
-                }
-                for combination in combinations(closed_edges, 4):
-                    if graph.covers_all_edges(combination + (prime_edges,)):
-                        print(tuple(closed_edges_remap[frozenset(edges)] for edges in combination) + (prime_path,))
+            if prime_path.nodes[-1] == 0:
+
+                for subpaths in combinations(closed_paths, 4):
+                    if graph.covers_all_edges(subpaths + (prime_path,)):
+                        print(tuple(path.nodes for path in subpaths) + (prime_path.nodes,))
                         break
                 else:
                     closed_paths.add(prime_path)
