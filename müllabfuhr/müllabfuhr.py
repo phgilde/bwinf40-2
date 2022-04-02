@@ -49,10 +49,10 @@ class Graph:
         return distance
 
     def covers_all_edges(self, paths):
-        edges_paths = set()
-        for path in paths:
-            edges_paths |= path
 
+        return self.edges_equal(set().union(*paths))
+
+    def edges_equal(self, edges_paths):
         return edges_paths == self.edges
 
 
