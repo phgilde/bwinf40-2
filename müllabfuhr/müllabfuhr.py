@@ -34,7 +34,8 @@ class Graph:
     def add_edge(self, start, end, distance):
         self.vertices[start].add_neighbor(end, distance)
         self.vertices[end].add_neighbor(start, distance)
-        self.edges.add(frozenset((start, end)))
+        self.edges.add((start, end))
+        self.edges.add((end, start))
 
     def get_vertex(self, vertex_id):
         return self.vertices[vertex_id]
@@ -50,8 +51,7 @@ class Graph:
     def covers_all_edges(self, paths):
         edges_paths = set()
         for path in paths:
-            for i in range(len(path) - 1):
-                edges_paths.add(frozenset((path[i], path[i + 1])))
+            edges_paths |= path
 
         return edges_paths == self.edges
 
@@ -75,6 +75,14 @@ def find_new_paths(graph, prime_path, closed_nodes=[]):
     }
 
 
+def edges_from_path(path):
+    edges = set()
+    for i in range(len(path) - 1):
+        edges.add((path[i], path[i + 1]))
+        edges.add((path[i + 1], path[i]))
+    return edges
+
+
 def read_graph(path):
     graph = Graph()
     with open(path) as f:
@@ -88,40 +96,43 @@ def read_graph(path):
 
 
 def main():
-    file_path = input("Pfad: ")
-    graph = read_graph(file_path)
-    closed_paths = set()
-    open_paths = {(0,)}
-    last_n_closed = len(closed_paths)
-    while True:
-        prime_path = min(open_paths, key=lambda x: graph.path_length(x))
-        open_paths.remove(prime_path)
-        if prime_path[-1] == 0:
-            closed_paths.add(prime_path)
-        new_paths = find_new_paths(graph, prime_path)
-        for new_path in new_paths:
-            may_add = True
-            for old_path in open_paths | closed_paths:
-                if old_path[-1] == new_path[-1]:
-                    if graph.path_length(old_path) >= graph.path_length(
-                        new_path
-                    ) and set(new_path) <= set(old_path):
-                        may_add = False
+    try:
+        file_path = input("Pfad: ")
+        graph = read_graph(file_path)
+        closed_paths = set()
+        open_paths = {(0,)}
+        while True:
+            prime_path = min(open_paths, key=lambda x: graph.path_length(x))
+            open_paths.remove(prime_path)
+            new_paths = find_new_paths(graph, prime_path)
+            for new_path in new_paths:
+                may_add = True
+                for old_path in open_paths | closed_paths:
+                    if old_path[-1] == new_path[-1]:
+                        if graph.path_length(old_path) >= graph.path_length(
+                            new_path
+                        ) and set(new_path) <= set(old_path):
+                            may_add = False
+                            break
+
+                if may_add:
+                    open_paths.add(new_path)
+            if prime_path[-1] == 0:
+                prime_edges = edges_from_path(prime_path)
+                closed_edges = (edges_from_path(path) for path in closed_paths)
+                closed_edges_remap = {
+                    frozenset(edges_from_path(path)): path for path in closed_paths
+                }
+                for combination in combinations(closed_edges, 4):
+                    if graph.covers_all_edges(combination + (prime_edges,)):
+                        print(tuple(closed_edges_remap[frozenset(edges)] for edges in combination) + (prime_path,))
                         break
-
-            if may_add:
-                open_paths.add(new_path)
-        if len(closed_paths) > last_n_closed:
-            print(closed_paths)
-            last_n_closed = len(closed_paths)
-            for combination in combinations(closed_paths, 4):
-                if graph.covers_all_edges(combination + (prime_path,)):
-                    print(combination + (prime_path,))
-                    break
-            else:
-                continue
-            break
-
+                else:
+                    closed_paths.add(prime_path)
+                    continue
+                break
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == "__main__":
