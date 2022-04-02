@@ -2,6 +2,7 @@ import cProfile
 from collections import Counter
 from itertools import combinations
 import pstats
+from time import time
 
 
 class NodeContainer:
@@ -49,13 +50,17 @@ class Graph:
         return distance
 
     def covers_all_edges(self, paths):
-        return self.edges_equal(set().union(*(path.edges for path in paths)))
+        return (
+            self.edges_equal(set().union(*(path.edges for path in paths)))
+            if len(self.edges) <= sum(len(path.edges) for path in paths)
+            else False
+        )
 
     def edges_equal(self, edges_paths):
         return edges_paths == self.edges
 
 
-class PathContainer():
+class PathContainer:
     def __init__(self, graph: Graph, nodes: list):
         self.nodes = nodes
         self.graph = graph
@@ -80,7 +85,9 @@ def shortest_path(graph, start, end):
 def find_new_paths(prime_path, closed_nodes=[]):
     return {
         PathContainer(prime_path.graph, prime_path.nodes + (node,))
-        for node in prime_path.graph.get_node(prime_path.nodes[-1]).get_neighbors()
+        for node in prime_path.graph.get_node(
+            prime_path.nodes[-1]
+        ).get_neighbors()
         if node not in closed_nodes
     }
 
@@ -120,16 +127,20 @@ def main():
                 may_add = True
                 for old_path in open_paths | closed_paths:
                     if old_path.nodes[-1] == new_path.nodes[-1]:
-                        if old_path.length >= new_path.length and set(new_path.nodes) <= set(old_path.nodes):
+                        if old_path.length >= new_path.length and set(
+                            new_path.nodes
+                        ) <= set(old_path.nodes):
                             may_add = False
                             break
-                if new_path.nodes[::-1] in open_paths:
+                if new_path.nodes[::-1] in (open_paths | closed_paths):
                     may_add = False
 
                 if may_add:
                     open_paths.add(new_path)
             if prime_path.nodes[-1] == 0:
-
+                print(len(closed_paths))
+                print(len(list(combinations(closed_paths, 4))))
+                start_time = time()
                 for subpaths in combinations(closed_paths, 4):
                     if graph.covers_all_edges(subpaths + (prime_path,)):
                         print(
@@ -138,10 +149,22 @@ def main():
                         )
                         loop = False
                         break
-                else:
-                    closed_paths.add(prime_path)
-                    continue
-                break
+
+                closed_paths.add(prime_path)
+                print(timedelta := (time() - start_time))
+                print(
+                    timedelta / (len(list(combinations(closed_paths, 4))) or 1)
+                )
+
+                closed_paths = set(
+                    filter(
+                        lambda f: not any(
+                            f.edges < g.edges for g in closed_paths
+                        ),
+                        closed_paths,
+                    )
+                )
+
     except KeyboardInterrupt:
         pass
 
