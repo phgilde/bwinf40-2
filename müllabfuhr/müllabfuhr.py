@@ -111,7 +111,8 @@ def main():
         graph = read_graph(file_path)
         closed_paths = set()
         open_paths = {PathContainer(graph, (0,))}
-        while True:
+        loop = True
+        while loop:
             prime_path = min(open_paths, key=lambda x: x.length)
             open_paths.remove(prime_path)
             new_paths = find_new_paths(prime_path)
@@ -131,7 +132,11 @@ def main():
 
                 for subpaths in combinations(closed_paths, 4):
                     if graph.covers_all_edges(subpaths + (prime_path,)):
-                        print(tuple(path.nodes for path in subpaths) + (prime_path.nodes,))
+                        print(
+                            tuple(path.nodes for path in subpaths)
+                            + (prime_path.nodes,)
+                        )
+                        loop = False
                         break
                 else:
                     closed_paths.add(prime_path)
