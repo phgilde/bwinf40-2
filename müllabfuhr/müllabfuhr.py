@@ -147,6 +147,7 @@ def main():
                 start_time = time()
                 if len(closed_paths) != 0:
                     if graph.covers_all_edges(closed_paths | {prime_path}):
+                        print("buh")
                         for subpaths in combinations(closed_paths, 4):
                             if graph.covers_all_edges(
                                 subpaths + (prime_path,)
