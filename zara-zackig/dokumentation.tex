@@ -93,6 +93,7 @@ Von den gegebenen $n$ Karten mit jeweils $m$ Bits werden $p$ Karten gesucht, so 
 && k_1 \xor k_2 \xor \ldots \xor k_{p-1} &= k_p && |\xor k_p \\
 \leftrightarrow && k_1 \xor k_2 \xor \ldots \xor k_{p-1} \xor k_p &= 0 &&
 \end{align*}
+Diese Gleichung lässt sich zu jeder der $p$ Karten umstellen. Es werden also $p$ Karten gesucht, deren XOR gleich einer Karte mit $m$ Nullen ist.
 \section{Umsetzung}
 \section{Laufzeit}
 
