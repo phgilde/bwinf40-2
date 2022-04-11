@@ -93,3 +93,10 @@ def null_space(matrix):
 null_space = null_space(cards)
 
 print(null_space.astype(int))
+print(cards.shape)
+
+for null_vector in null_space:
+    xor = np.zeros((cards.shape[0]), dtype=bool)
+    for card in cards.T[null_vector]:
+        xor ^= card
+    print(xor.astype(int))
