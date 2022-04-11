@@ -3,7 +3,7 @@ import sys
 import numpy as np
 
 
-def gauusian_elimination(matrix, result):
+def gaussian_elimination(matrix, result):
     result_matrix = np.concatenate((matrix, result.reshape(-1, 1)), axis=1)
     r = 0
     for i in range(matrix.shape[1]):
@@ -75,7 +75,7 @@ def null_space(matrix):
             axis=0,
         )
 
-    rref = gauusian_elimination(
+    rref = gaussian_elimination(
         matrix, np.zeros((matrix.shape[0])).astype(bool)
     )[:, :-1]
     start = empty_row_start(rref)
@@ -85,7 +85,7 @@ def null_space(matrix):
     for i in range(null_space.shape[0]):
         result = np.zeros(rref.shape[0], dtype=bool)
         result[i + start] = 1
-        eliminated = gauusian_elimination(rref, result)
+        eliminated = gaussian_elimination(rref, result)
         null_space[i] = eliminated[:, -1].reshape(-1)[: rref.shape[1]]
     return null_space
 
