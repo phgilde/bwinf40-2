@@ -3,29 +3,21 @@ import sys
 import numpy as np
 
 
-def gaussian_elimination(matrix, result):
-    order_matrix = np.identity(min(matrix.shape), dtype=int)
+def gauusian_elimination(matrix, result):
     result_matrix = np.concatenate((matrix, result.reshape(-1, 1)), axis=1)
-    for i in range(min(matrix.shape)):
-        r = i
-        while (not any(result_matrix[i:, r])) and r < matrix.shape[1]:
+    r = 0
+    for i in range(matrix.shape[1]):
+        while r + 1 < matrix.shape[1] and (not any(result_matrix[i:, r])):
             r += 1
-        if r != i and r < matrix.shape[1]:
-            result_matrix[:, [r, i]] = result_matrix[:, [i, r]]
-            order_matrix[[r, i]] = order_matrix[[i, r]]
-
-        if not result_matrix[i, i]:
+        if not result_matrix[i, r]:
             for k in range(i + 1, matrix.shape[0]):
-                if result_matrix[k, i]:
+                if result_matrix[k, r]:
                     result_matrix[i] ^= result_matrix[k]
                     break
-        for k in range(0, matrix.shape[0]):
-            if result_matrix[k, i] and k != i:
+        for k in range(matrix.shape[0]):
+            if result_matrix[k, r] and k != i:
                 result_matrix[k] ^= result_matrix[i]
-    result_matrix[: order_matrix.shape[0], : order_matrix.shape[1]] = (
-        result_matrix[: order_matrix.shape[0], : order_matrix.shape[1]]
-        @ order_matrix
-    )
+        r += 1
     return result_matrix
 
 
@@ -83,23 +75,21 @@ def null_space(matrix):
             axis=0,
         )
 
-    rref = gaussian_elimination(
+    rref = gauusian_elimination(
         matrix, np.zeros((matrix.shape[0])).astype(bool)
     )[:, :-1]
     start = empty_row_start(rref)
     null_space = np.ndarray((null_space_size(rref), rref.shape[1]), dtype=bool)
-
+    print(rref.astype(int))
     rref = add_free_coeffs(rref)
     for i in range(null_space.shape[0]):
         result = np.zeros(rref.shape[0], dtype=bool)
         result[i + start] = 1
-        eliminated = gaussian_elimination(rref, result)
-        null_space[i] = eliminated[:, -1].reshape(-1)[:rref.shape[1]]
+        eliminated = gauusian_elimination(rref, result)
+        null_space[i] = eliminated[:, -1].reshape(-1)[: rref.shape[1]]
     return null_space
 
 
-null_space = null_space(
-    cards
-)
+null_space = null_space(cards)
 
 print(null_space.astype(int))
