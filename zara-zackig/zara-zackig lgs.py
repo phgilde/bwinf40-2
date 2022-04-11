@@ -7,16 +7,16 @@ def gaussian_elimination(matrix, result):
     result_matrix = np.concatenate((matrix, result.reshape(-1, 1)), axis=1)
     r = 0
     for i in range(matrix.shape[1]):
-        while r + 1 < matrix.shape[1] and (not any(result_matrix[i:, r])):
-            r += 1
-        if not result_matrix[i, r]:
-            for k in range(i + 1, matrix.shape[0]):
-                if result_matrix[k, r]:
-                    result_matrix[i] ^= result_matrix[k]
+        if not result_matrix[r, i]:
+            for k in range(r + 1, matrix.shape[0]):
+                if result_matrix[k, i]:
+                    result_matrix[r] ^= result_matrix[k]
                     break
+            else:
+                continue
         for k in range(matrix.shape[0]):
-            if result_matrix[k, r] and k != i:
-                result_matrix[k] ^= result_matrix[i]
+            if result_matrix[k, i] and k != r:
+                result_matrix[k] ^= result_matrix[r]
         r += 1
     return result_matrix
 
