@@ -79,9 +79,11 @@ def null_space(matrix):
         matrix, np.zeros((matrix.shape[0])).astype(bool)
     )[:, :-1]
     start = empty_row_start(rref)
-    null_space = np.ndarray((null_space_size(rref), rref.shape[1]), dtype=bool)
     print(rref.astype(int))
     rref = add_free_coeffs(rref)
+    #TODO: richtige größe des nullraums
+    null_space = np.ndarray((null_space_size(rref), rref.shape[1]), dtype=bool)
+    print(rref.astype(int))
     for i in range(null_space.shape[0]):
         result = np.zeros(rref.shape[0], dtype=bool)
         result[i + start] = 1
