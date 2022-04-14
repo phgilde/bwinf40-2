@@ -5,15 +5,15 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
 
-\newcommand{\Aufgabe}{Aufgabe 3: Hex-Max} % Aufgabennummer und Aufgabennamen angeben
-\newcommand{\TeamId}{00730}                       % Team-ID aus dem PMS angeben
+\newcommand{\Aufgabe}{Aufgabe 4: Zara Zackigs Zurückkehr} % Aufgabennummer und Aufgabennamen angeben
+\newcommand{\TeamId}{62454}                       % Team-ID aus dem PMS angeben
 \newcommand{\TeamName}{SilverBean}                 % Team-Namen angeben
 \newcommand{\Namen}{Philip Gilde}           % Namen der Bearbeiter/-innen dieser Aufgabe angeben
  \newcommand*\xor{\oplus}
 \usepackage{scrlayer-scrpage, lastpage}
 \setkomafont{pageheadfoot}{\large\textrm}
 \lohead{\Aufgabe}
-\rohead{Team-ID: \TeamId}
+\rohead{Teilnahme-ID: \TeamId}
 \cfoot*{\thepage{}/\pageref{LastPage}}
 
 % Position des Titels
@@ -65,6 +65,8 @@
   morestring=[b]",
   sensitive=true
 }
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\chapter*}{\section}{}{}
 \usepackage{csquotes}
 \newcommand\mdoubleplus{\mathbin{+\mkern-10mu+}}
 % Diese beiden Pakete müssen zuletzt geladen werden
@@ -73,7 +75,7 @@
 
 % Daten für die Titelseite
 \title{\textbf{\Huge\Aufgabe}}
-\author{\LARGE Team-ID: \LARGE \TeamId \\\\
+\author{\LARGE Teilnahme-ID: \LARGE \TeamId \\\\
 	    \LARGE Bearbeiter dieser Aufgabe: \\ 
 	    \LARGE \Namen\\\\}
 \date{\LARGE\today}
@@ -93,7 +95,7 @@ Von den gegebenen $n$ Karten mit jeweils $m$ Bits werden $p$ Karten gesucht, so 
 && k_1 \xor k_2 \xor \ldots \xor k_{p-1} &= k_p && |\xor k_p \\
 \leftrightarrow && k_1 \xor k_2 \xor \ldots \xor k_{p-1} \xor k_p &= 0 &&
 \end{align*}
-Diese Gleichung lässt sich zu jeder der $p$ Karten umstellen. Es werden also $p$ Karten gesucht, deren XOR gleich einer Karte mit $m$ Nullen ist. Dieses Problem lässt sich umformulieren zu einem linearen Gleichungssystem im Galois-Feld $GF(2)$. Dieses besteht nur aus den beiden Elementen 0 und 1. Die Addition im Feld entspricht dem XOR, die Multiplikation einem UND. Die gemischten Karten entsprechen der Matrix $K^{(n, m)}$. $K_n$ ist die n-te Karte und $K_{n,m}$ das m-te Bit der n-ten Karte. Gesucht wird der Vektor $v^{(n)} \in GF(2)$, so dass dieses lineare Gleichungssystem gilt:
+Diese Gleichung lässt sich zu jeder der $p$ Karten umstellen. Es werden also $p$ Karten gesucht, deren XOR gleich einer Karte mit $m$ Nullen ist. Dieses Problem lässt sich umformulieren zu einem linearen Gleichungssystem im Galois-Feld $GF(2)$. Dieses besteht nur aus den beiden Elementen 0 und 1. Die Addition im Feld entspricht dem XOR, die Multiplikation einem UND. Die gemischten Karten entsprechen der Matrix $K \in GF(2)^{n \times m}$. $K_n$ ist dabei die n-te Karte und $K_{n,m}$ das m-te Bit der n-ten Karte. Gesucht wird der Vektor $v \in GF(2)^n$, so dass dieses lineare Gleichungssystem gilt:
 \begin{align*}
 K_{1, 1} v_1 + K_{2, 1} v_2 + \ldots + K_{n, 1} v_n &= 0 \\
 K_{1, 2} v_1 + K_{2, 2} v_2 + \ldots + K_{n, 2} v_n &= 0 \\
@@ -102,14 +104,224 @@ K_{1, m} v_1 + K_{2, m} v_2 + \ldots + K_{n, m} v_n &= 0 \\
 \end{align*}
 In Matrixform:
 \begin{align*}
-K \cdot v = 0
+K^T \cdot v = 0
 \end{align*}
-Dabei bestimmt $v_n$, ob die n-te Karte zu den gesuchten Karten gehört. Die Menge linear unabhängiger Vektoren, die sich oben für $v$ einsetzen lassen, wird als Nullraum der Matrix $K$ bezeichnet.
+Dabei bestimmt $v_n$, ob die n-te Karte zu den gesuchten Karten gehört. \\
+Die Menge von Vektoren, die sich oben für $v$ einsetzen lassen, wird als Nullraum oder Kern der Matrix $K^T$ bezeichnet. In $GF(2)$ kann ein Vektor nicht skaliert werden, weil er nur mit entweder $0$ oder $1$ multipliziert werden kann. Somit besteht der Nullraum aus allen möglichen Kombinationen von Summen der Basisvektoren. Wenn $r$ der Rang von $K^T$ ist, dann ist $q=n-r$ die Anzahl der Basisvektoren des Nullraums. Der Rang von $K^T$ ist die Anzahl linear unabhängiger Zeilen beziehungsweise Spalten (diese beiden Werte sind gleich). Wenn, wie in der ursprünglichen Aufgabe, $n<m$, dann ist der Rang in der Regel $n-1$, denn nur eine Karte, die Wiederherstellungskarte, ist linear abhängig von den anderen. \\
+Die Wahrscheinlichkeit, dass $h$ Karten mit jeweils $b$ Bits voneinander linear unabhängig sind, ist, wenn diese zufällig und erzeugt sind und Nullen und Einsen gleich wahrscheinlich sind, wovon der Einfachheit halber ausgegangen wird, nach \cite{WEBSITE:1} gegeben durch
+\begin{align*}
+p_h = \prod^h_{i=1} (1-2^{i-1-b})
+\end{align*}
+Diese ist für $h=n-1=110$ und $b=m=128$ hoch genug, um den anderen Fall zunächst außen vor zu lassen. Somit sind alle bis auf eine der $111$ Karten linear unabhängig voneinander. Der Nullraum besteht damit aus nur $q=n-(n-1)=n-n+1=1$ Vektor. Dieser muss an den Stellen der $11$ echten Karten $1$ und sonst überall $0$ sein. Somit haben wir die echten Karten gefunden. \\
+Um die Basisvektoren zu finden, muss man $K^T \cdot v = 0$ zunächst mit dem Gauß-Jordan-Algorithmus in Stufenform bringen. Aus dieser Stufenform kann man die freien Variablen des Gleichungssystems ablesen. Die Basisvektoren des Nullraums lassen sich finden, in dem man nacheinander jede der freien Variablen auf 1 und alle anderen auf 1 setzt und dann das daraus resultierende Gleichungssystem wiederum mit dem Gauß-Jordan-Algorithmus auf Stufenform bringt. Dann lässt sich der Basisvektor auf der rechten Seite der Gleichung ablesen. Dieses Verfahren soll an einem Beispiel erklärt werden:
+\begin{align*}
+K&= \left[
+\begin{array}{ccccccc}
+1 & 0 & 0 & 1 & 1 & 0 & 1 \\ 
+0 & 1 & 0 & 1 & 0 & 1 & 0 \\ 
+1 & 0 & 1 & 1 & 0 & 0 & 1 \\ 
+0 & 0 & 0 & 1 & 1 & 0 & 1 \\ 
+1 & 1 & 1 & 0 & 0 & 1 & 0 \\ 
+1 & 0 & 0 & 0 & 1 & 1 & 0 \\ 
+0 & 1 & 1 & 0 & 1 & 0 & 0
+\end{array} \right] \\
+K^T&=\left[
+\begin{array}{ccccccc}
+1&0&1&0&1&1&0\\
+0&1&0&0&1&0&1\\
+0&0&1&0&1&0&1\\
+1&1&1&1&0&0&0\\
+1&0&0&1&0&1&1\\
+0&1&0&0&1&1&0\\
+1&0&1&1&0&0&0\\
+\end{array}\right]\\
+K^T \cdot v &= 0\\
+\end{align*}
+Ich verwende im Folgenden der Einfachheit halber die erweiterte Koeffizientenmatrix, welche für dieses Gleichungssystem so aussieht:
+\begin{align*}
+(K^T|0)=\left[\begin{array}{ccccccc|c}
+1&0&1&0&1&1&0&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+1&1&1&1&0&0&0&0\\
+1&0&0&1&0&1&1&0\\
+0&1&0&0&1&1&0&0\\
+1&0&1&1&0&0&0&0\\
+\end{array}\right]\\
+\end{align*}
+Der "klassische" Gauß-Jordan-Algorithmus basiert darauf, dass die sich die Lösungsmenge nicht verändert, wenn man im Gleichungssystem eine Zeile zu einer anderen addiert, oder eine Zeile mit einem Wert multipliziert. In $GF(2)$ gilt das selbe: Man kann eine Zeile zu einer anderen addieren (beziehunsweise XOR-en), ohne die Lösungsmenge zu verändern, weil eine Gleichung ja auf beiden Seiten den gleichen Wert hat. Um das Gleichungssystem auf Stufenform zu bringen, muss in möglichst vielen Reihen der erste Wert in seiner Spalte allein sein. Als erstes soll in der ersten Spalte nur eine eins stehen, und zwar in der ersten Reihe. Dafür wird die erste Reihe zu allen Reihen addiert, deren erster Wert nicht Null ist, denn dadurch wird aus diesen eine Null:
+\begin{align*}
+\left[\begin{array}{ccccccc|c}
+1&0&1&0&1&1&0&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+1&1&1&1&0&0&0&0\\
+1&0&0&1&0&1&1&0\\
+0&1&0&0&1&1&0&0\\
+1&0&1&1&0&0&0&0\\
+\end{array}\right]
+\rightarrow\left[\begin{array}{ccccccc|c}
+1&0&1&0&1&1&0&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&1&0&1&1&1&0&0\\
+0&0&1&1&1&0&1&0\\
+0&1&0&0&1&1&0&0\\
+0&0&0&1&1&1&0&0\\
+\end{array}\right]\\
+\end{align*}
+In der zweiten Zeile soll die eins in der zweiten Spalte allein stehen. Dafür wird genauso verfahren:
+\begin{align*}
+\left[\begin{array}{ccccccc|c}
+1&0&1&0&1&1&0&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&1&0&1&1&1&0&0\\
+0&0&1&1&1&0&1&0\\
+0&1&0&0&1&1&0&0\\
+0&0&0&1&1&1&0&0\\
+\end{array}\right]
+\rightarrow \left[\begin{array}{ccccccc|c}
+1&0&1&0&1&1&0&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&0&0&1&0&1&1&0\\
+0&0&1&1&1&0&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&1&1&1&0&0\\
+\end{array}\right]\\
+\end{align*}
+Für die restlichen Reihen wird genauso verfahren:
+\begin{align*}
+\left[\begin{array}{ccccccc|c}
+1&0&1&0&1&1&0&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&0&0&1&0&1&1&0\\
+0&0&1&1&1&0&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&1&1&1&0&0\\
+\end{array}\right]
+\rightarrow \left[\begin{array}{ccccccc|c}
+1&0&0&0&0&1&1&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&0&0&1&0&1&1&0\\
+0&0&0&1&0&0&0&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&1&1&1&0&0\\
+\end{array}\right]
+\rightarrow \left[\begin{array}{ccccccc|c}
+1&0&0&0&0&1&1&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&0&0&1&0&1&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&1&0&1&0\\
+\end{array}\right]\\
+\end{align*}
+In der fünften Reihe ist das Element in der fünften Spalte Null. Um daraus eine 1 zu machen, wird eine beliebige darunterliegende Reihe, die eine Eins an an fünfter Stelle hat, zur fünften addiert.
+\begin{align*}
+\left[\begin{array}{ccccccc|c}
+1&0&0&0&0&1&1&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&0&0&1&0&1&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&1&0&1&0\\
+\end{array}\right]
+\rightarrow \left[\begin{array}{ccccccc|c}
+1&0&0&0&0&1&1&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&0&0&1&0&1&1&0\\
+0&0&0&0&1&1&0&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&1&0&1&0\\
+\end{array}\right]\\
+\end{align*}
+Dann wird wie vorher weitergemacht:
+\begin{align*}
+\left[\begin{array}{ccccccc|c}
+1&0&0&0&0&1&1&0\\
+0&1&0&0&1&0&1&0\\
+0&0&1&0&1&0&1&0\\
+0&0&0&1&0&1&1&0\\
+0&0&0&0&1&1&0&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&1&0&1&0\\
+\end{array}\right]
+\rightarrow \left[\begin{array}{ccccccc|c}
+1&0&0&0&0&1&1&0\\
+0&1&0&0&0&1&1&0\\
+0&0&1&0&0&1&1&0\\
+0&0&0&1&0&1&1&0\\
+0&0&0&0&1&1&0&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&0&1&1&0\\
+\end{array}\right]
+\rightarrow \left[\begin{array}{ccccccc|c}
+1&0&0&0&0&0&0&0\\
+0&1&0&0&0&0&0&0\\
+0&0&1&0&0&0&0&0\\
+0&0&0&1&0&0&0&0\\
+0&0&0&0&1&0&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&0&0&0&0\\
+\end{array}\right]\\
+\end{align*}
+Die Koeffizientenmatrix ist jetzt also in Stufenform. Die einzige freie Variable ist $v_7$. Diese wird auf 1 gesetzt und die Matrix auf Stufenform gebracht:
+\begin{align*}
+\left[\begin{array}{ccccccc|c}
+1&0&0&0&0&0&0&0\\
+0&1&0&0&0&0&0&0\\
+0&0&1&0&0&0&0&0\\
+0&0&0&1&0&0&0&0\\
+0&0&0&0&1&0&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&0&0&0&0\\
+\end{array}\right]
+\rightarrow \left[\begin{array}{ccccccc|c}
+1&0&0&0&0&0&0&0\\
+0&1&0&0&0&0&0&0\\
+0&0&1&0&0&0&0&0\\
+0&0&0&1&0&0&0&0\\
+0&0&0&0&1&0&1&0\\
+0&0&0&0&0&1&1&0\\
+0&0&0&0&0&0&1&1\\
+\end{array}\right]
+\rightarrow \left[\begin{array}{ccccccc|c}
+1&0&0&0&0&0&0&0\\
+0&1&0&0&0&0&0&0\\
+0&0&1&0&0&0&0&0\\
+0&0&0&1&0&0&0&0\\
+0&0&0&0&1&0&0&1\\
+0&0&0&0&0&1&0&1\\
+0&0&0&0&0&0&1&1\\
+\end{array}\right]\\
+\end{align*}
+Wie man ablesen kann, sind $v_5, v_6, v_7$ alle 1. Somit sind die drei Öffnungskarten die letzten drei:
+\begin{align*}
+\begin{array}{ccccccc}
+1 & 1 & 1 & 0 & 0 & 1 & 0 \\ 
+1 & 0 & 0 & 0 & 1 & 1 & 0 \\ 
+0 & 1 & 1 & 0 & 1 & 0 & 0
+\end{array}
+\end{align*}
+Wie man sieht, ist diese Lösung korrekt, denn jede Karte ist das XOR der jeweils anderen beiden.\\\\
+Wenn $q>1$ ist, kann es sein, dass keiner der Basisvektoren des Nullraums 11 Einsen beinhaltet, sondern eine Linearkombination dieser. In diesem Fall wird jede der $2^q$ Kombinationen der Basisvektoren durchprobiert, bis eine davon $11$ Eisen enthält.\\\\
+Die richtige Karte für das $s$-te Haus kann gefunden werden, in dem man die Karten aufsteigend sortiert und zuerst die $s$-te und dann die $s+1$-te Karte ausprobiert. Wenn die Sicherungskarte kleiner als die Öffnungskarte des $s$-ten Hauses ist, liegt sie davor im Stapel und die Öffnungskarte an der Stelle $s+1$. Wenn sie größer ist, dann liegt sie dahinter im Stapel und die Öffnungskarte an Stelle $s$.\\
+\\
+Das Verfahren stößt an seine Grenzen, wenn $n>m$ ist. Der Rang von $K^T$ ist dann nämlich höchstens $m$, wodurch der Nullraum $q=n-m$ Basisvektoren hat. Diese Basisvektoren müssen nun nicht zwangsweise einen mit 11 Einsen beinhalten, dieser könnte auch eine Linearkombination der anderen Basisvektoren sein. Wenn das der Fall ist, müsste man alle $2^q$ Kombinationen von Basisvektoren durchprobieren, bis eine davon $11$ Einsen beinhaltet, was für die Beispieleingabe auf der BwInf-Webseite mit $161$ Karten zu je $128$ Bit $2^q=2^{n-m}=2^{161-128}=2^{33}=8.589.934.592$ Kombinationen sind. Diese lassen sich nicht wirklich in überschaubarer Zeit durchprobieren.
 \section{Umsetzung}
+Die Lösung wurde in Python umgesetzt. Dabei wurde die Bibliothek \lstinline|NumPy| verwendet, um die Koeffizientenmatrizen darzustellen. 
 \section{Laufzeit}
-
+Ein Durchlauf des Gauß-Jordan-Algorithmus hat eine Laufzeit von $\mathcal{O}(n^3)$. Der Algorithmus wird einmal ursprünglich und dann für jeden der $q$ Basisvektoren des Nullraums durchgeführt, somit ist die Laufzeit $\mathcal{O}((q+1)n^3)$
 \section{Beispiele}
 
 \section{Quellcode}
-
+\bibliography{referenzen}
+\bibliographystyle{ieeetr}
 \end{document}
