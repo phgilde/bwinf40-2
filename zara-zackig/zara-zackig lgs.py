@@ -81,8 +81,8 @@ def null_space(matrix):
     start = empty_row_start(rref)
     print(rref.astype(int))
     rref = add_free_coeffs(rref)
-    #TODO: richtige größe des nullraums
-    null_space = np.ndarray((null_space_size(rref), rref.shape[1]), dtype=bool)
+    # TODO: richtige größe des nullraums
+    null_space = np.ndarray((rref.shape[1] - start, rref.shape[1]), dtype=bool)
     print(rref.astype(int))
     for i in range(null_space.shape[0]):
         result = np.zeros(rref.shape[0], dtype=bool)
@@ -96,7 +96,7 @@ null_space = null_space(cards)
 
 print(null_space.astype(int))
 print(cards.shape)
-
+# TODO: all combinations of null vectors of none with correct number of cards
 for null_vector in null_space:
     xor = np.zeros((cards.shape[0]), dtype=bool)
     for card in cards.T[null_vector]:
