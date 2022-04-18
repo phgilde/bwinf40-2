@@ -6,7 +6,8 @@ from itertools import product
 # gauss-jordan-algorithmus
 def gauss_jordan(matrix, result):
     # bildung der erweiterten koeffizientenmatrix
-    result_matrix = np.concatenate((matrix, result.reshape(-1, 1)), axis=1)
+    print(matrix.shape, result.shape)
+    result_matrix = np.concatenate((matrix, result), axis=1)
     row = 0
     for column in range(matrix.shape[1]):
         if not result_matrix[row, column]:
@@ -67,20 +68,17 @@ def null_space(matrix):
             ),
             axis=0,
         )
-
+    print(matrix.shape)
     rref = gauss_jordan(
-        matrix, np.zeros((matrix.shape[0])).astype(bool)
-    )[:, :-1]
-    start = empty_row_start(rref)
-    rref = add_free_coeffs(rref)
-    # TODO: richtige größe des nullraums
-    null_space = np.ndarray((rref.shape[1] - start, rref.shape[1]), dtype=bool)
-    for i in range(null_space.shape[0]):
-        result = np.zeros(rref.shape[0], dtype=bool)
-        result[i + start] = 1
-        eliminated = gauss_jordan(rref, result)
-        null_space[i] = eliminated[:, -1].reshape(-1)[: rref.shape[1]]
-    return null_space
+        matrix.T, np.identity(matrix.shape[1], dtype=bool)
+    ).T
+    top_half = rref[:matrix.shape[0]]
+    bottom_half = rref[matrix.shape[0]:]
+    null_space = []
+    for i in range(top_half.shape[1]):
+        if not any(top_half[:, i]):
+            null_space.append(bottom_half[:, i].reshape(-1))
+    return np.array(null_space)
 
 
 with open(input("Pfad: ")) as f:
