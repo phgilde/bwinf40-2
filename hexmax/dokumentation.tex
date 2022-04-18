@@ -41,8 +41,11 @@
   {ß}{{\ss}}1
   {ü}{{\"u}}1
   {ä}{{\"a}}1
-  {ö}{{\"o}}1
+  {ö}{{\"o}}1,
+  breaklines=true,
+  breakatwhitespace=true
 }
+
 \usepackage{wrapfig}
 \usepackage{color}
 \definecolor{mygreen}{rgb}{0,0.6,0}
@@ -153,11 +156,119 @@ Zuletzt muss bei einer Vertiefung der Suche diese nicht immer nochmal durchgefü
 Wenn $Z'$ gefunden ist, muss die Reihenfolge der Umlegungen ermittelt werden. Dabei muss laut Aufgabenstellung zu jedem Zeitpunkt bei jeder Ziffer mindestens ein Stäbchen liegen. Dafür wird eine zunächst leere Liste von Umlegungen $L$ und der Zwischenzustand $Z^*$ eingeführt, welcher anfangs gleich der Ausgangszahl ist. Nun wird für jedes Segment $Z_{j,k}^*$ von $Z^*$ geprüft ($j$ ist die Zahl der Ziffer und $k$ des Segments in dieser), dort ein Stäbchen liegt, aber nicht bei $Z_{j,k}'$, also $Z^*_{j,k} \land \neg Z_{j,k}'$. Wenn ja, muss dieses Stäbchen verlegt werden. Wenn das Stäbchen das einzige Stäbchen seiner Ziffer ist, wird bei der nächsten Ziffer weitergemacht und das Stäbchen wird später verlegt. Wenn nicht, wird bei $Z'$ nach einem Segment gesucht, bei dem ein Stäbchen liegt, an dessen Stelle aber bei $Z^*$ noch keines liegt. Es werden also $q,r$ gesucht, für die gilt $Z'_{q,r} \land \neg Z^*_{q,r}$. Diese Verschiebung des Stäbchens bei $j,k$ nach $q,r$ wird in $Z^*$ durchgeführt und an das Ende von $L$ gehangen. $Z_{j,k}^*$ wird weiter durch das veränderte $Z^*$ iteriert. Wenn das letzte Segment erreicht ist, wird wieder von vorne begonnen. Es wird so lange iteriert, bis $Z^*=Z'$. Dann wurden alle Schritte gefunden.
 \section{Umsetzung}
 Die Aufgabe wurde in Python implementiert. Dabei wurde die Klasse \lstinline|HashableArray| eingeführt, die eine oder mehrere Ziffern repräsentiert. Die Klasse ermöglicht die notwendigen elementweisen Operationen \textit{und} und \textit{nicht}, so wie das Zählen der Stäbchen. Diese Operationen werden auch von NumPy-Arrays unterstützt, allerdings sind diese veränderbar und können deshalb nicht gehasht und somit als Schlüssel in einem \lstinline|dict| verwendet werden. Das ist notwendig, weil der zur Python-Standardbibliothek gehörende Dekorator \lstinline|functools.lru_cache| sonst nicht verwendet werden kann. Dieser Dekorator speichert die Ergebnisse von Funktionen, damit diese bei gleichen Argumenten nicht nochmal ihre ganze Laufzeit brauchen, sondern das Ergebnis (in der Regel) innerhalb von $\mathcal{O}(1)$ abgerufen werden kann. Damit wird die in der Lösungsidee beschriebene nicht-Durchführung der Vertiefung der Suche bei gleichen Bedingungen implementiert. Weil das Verfahren rekursiv implementiert wurde, musste die Begrenzung der Rekursionstiefe von Python mit \lstinline|sys.setrecursionlimit(3000)| auf 3000 erhöht werden. Mit dieser Tiefe konnte selbst die Beispieleingabe auf der BwInf-Webseite mit 1000 Ziffern gelöst werden, für höhere Werte wurde das Programm nicht getestet. \\
-Wenn das Programm aufgerufen wird, muss erst der Pfad zur Datei mit der Eingabe angegeben werden, und dann, ob die einzelnen Schritte ausgegeben werden sollen.
+Wenn das Programm aufgerufen wird, muss erst der Pfad zur Datei mit der Eingabe angegeben werden, und dann, ob die Zwischenstände ausgegeben werden sollen. Die Zwischenstände werden in Listenform ausgegeben, das heißt jede Ziffer wird als flache Liste der Segmente in der auf Seite 1 definierten Reihenfolge ausgegeben. Eine Eins steht dabei für ein vorhandenes Stäbchen und eine Null für eine Lücke. Die Ziffer d würde somit als \lstinline|[0, 0, 1, 1, 1, 1]| ausgegeben werden. 
 \section{Laufzeit}
-Es wenn die eingegebene Zahl $Z$ die Länge $n$ hat, müssen höchstens $16^n-Z$ verschiedene Zahlen durchprobiert werden. Eine wirkliche Abschätzung der Laufzeit ist schwierig, weil der Einfluss der Bedingungen für die Vertiefung der Suche hochgradig abhängig von der eingegeben Zahl ist. Der Speicherbedarf wächst linear zu $n$, da immer nur die aktuelle Teiltransformation, welche aus höchstens $n$ Ziffern besteht, gespeichert werden muss. Beim Speichern der Ergebnisse von Vertiefungen der Suche kann der Speicherbedarf theoretisch schnell ansteigen, allerdings wurde die Größe des \lstinline|functools.lru_cache|, welcher dies implementiert, begrenzt. Bei der längsten Beispieleingabe lag der maximale Arbeitsspeicherbedarf bei circa 58 MB. Diesen Wert erachte ich als akzeptabel, weil die meisten aktuellen Computer wenigstens 1 GB Arbeitsspeicher für Programme zur Verfügung stellen.
+Es wenn die eingegebene Zahl $Z$ die Länge $n$ hat, müssen höchstens $16^n-Z$ verschiedene Zahlen durchprobiert werden. Eine wirkliche Abschätzung der Laufzeit ist schwierig, weil der Einfluss der Bedingungen für die Vertiefung der Suche in komplexem Zusammenhang mit der eingegebenen Zahl steht. Zur besseren Bestimmung der Laufzeitordnung habe ich auch die Ausführungszeit für zufällig generierte Eingaben mit verschiedenen Parametern untersucht. \\
+\includegraphics[width=0.5\textwidth]{laufzeit1} \includegraphics[width=.5\textwidth]{laufzeit2} Der Speicherbedarf wächst linear zu $n$, da immer nur die aktuelle Teiltransformation, welche aus höchstens $n$ Ziffern besteht, gespeichert werden muss. Beim Speichern der Ergebnisse von Vertiefungen der Suche kann der Speicherbedarf theoretisch schnell ansteigen, allerdings wurde die Größe des \lstinline|functools.lru_cache|, welcher dies implementiert, begrenzt. Bei der längsten Beispieleingabe lag der maximale Arbeitsspeicherbedarf bei circa 58 MB. Diesen Wert erachte ich als akzeptabel, weil die meisten aktuellen Computer wenigstens 1 GB Arbeitsspeicher für Programme zur Verfügung stellen.
 \section{Beispiele}
-
+Um Platz zu sparen, wurden die Eingabedateien hier weggelassen, sie sind im Ordner "beispiele" zu finden. Die Beispiele sind die gleichen, wie auf der BwInf-Webseite zu finden sind. Bei den Beispieleingaben, bei denen die Zwischenstände ausgegeben werden sollen, sind diese im Ordner \lstinline|zwischenschritte| zu finden, da das Dokument sonst sehr lang werden würde. Diese stünden an Stelle von \lstinline|gekürzt| in der Ausgabe.\\
+Beispiel 1: \\
+Eingabe: \begin{lstlisting}
+beispiele/hexmax0.txt
+J
+\end{lstlisting}
+Ausgabe: \begin{lstlisting}
+Ursprüngliche Zahl:
+D24
+Höchstmögliche Zahl:
+EE4
+3 Umlegungen
+Zwischenstände:
+[Gekürzt]
+\end{lstlisting}
+Beispiel 2: \\
+Eingabe: \begin{lstlisting}
+beispiele/hexmax1.txt
+J
+\end{lstlisting}
+Ausgabe: \begin{lstlisting}
+Ursprüngliche Zahl:
+509C431B55
+Höchstmögliche Zahl:
+FFFEA91B95
+8 Umlegungen
+Zwischenstände:
+\end{lstlisting}
+Beispiel 3: \\
+Eingabe: \begin{lstlisting}
+beispiele/hexmax2.txt
+J
+\end{lstlisting}
+Ausgabe: \begin{lstlisting}
+Ursprüngliche Zahl:
+632B29B38F11849015A3BCAEE2CDA0BD496919F8
+Höchstmögliche Zahl:
+FFFFFFFFFFFFFFFFD9A9BEAEE8EDA8BDA989D9F8
+37 Umlegungen
+Zwischenstände:
+[Gekürzt]
+\end{lstlisting}
+Beispiel 4: \\
+Eingabe: \begin{lstlisting}
+beispiele/hexmax3.txt
+N
+\end{lstlisting}
+Ausgabe: \begin{lstlisting}
+Ursprüngliche Zahl:
+0E9F1DB46B1E2C081B059EAF198FD491F477CE1CD37EBFB65F8D765055757C6F4796BB8B3DF
+7FCAC606DD0627D6B48C17C09
+Höchstmögliche Zahl:
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAA98BB8B9DF
+AFEAE888D8888A88888888888
+121 Umlegungen
+\end{lstlisting}
+Beispiel 5: \\
+Eingabe: \begin{lstlisting}
+beispiele/hexmax4.txt
+N
+\end{lstlisting}
+Ausgabe: \begin{lstlisting}
+Ursprüngliche Zahl:
+1A02B6B50D7489D7708A678593036FA265F2925B21C28B4724DD822038E3B4804192322F230
+AB7AF7BDA0A61BA7D4AD8F888
+Höchstmögliche Zahl:
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEB8DE88BAA8ADD888898E9BA88AD98988F898
+ABAAFABDA8A81BA7D4AD8F888
+87 Umlegungen
+\end{lstlisting}
+Beispiel 6: \\
+Eingabe: \begin{lstlisting}
+beispiele/hexmax4.txt
+N
+\end{lstlisting}
+Ausgabe: \begin{lstlisting}
+Ursprüngliche Zahl:
+EF50AA77ECAD25F5E11A307B713EAAEC55215E7E640FD263FA529BBB48DC8FAFE14D5B02EBF
+792B5CCBBE9FA1330B867E330A6412870DD2BA6ED0DBCAE553115C9A31FF350C5DF99382488
+6DB5111A83E773F23AD7FA81A845C11E22C4C45005D192ADE68AA9AA57406EB0E7C9CA13AD0
+3888F6ABEDF1475FE9832C66BFDC28964B7022BDD969E5533EA4F2E4EABA75B5DC119728248
+96786BD1E4A7A7748FDF1452A5079E0F9E6005F040594185EA03B5A869B109A283797AB3139
+4941BFE4D38392AD12186FF6D233585D8C820F197FBA9F6F063A0877A912CCBDCB14BEECBAE
+C0ED061CFF60BD517B6879B72B9EFE977A9D3259632C718FBF45156A16576AA7F9A4FAD40AD
+8BC87EC569F9C1364A63B1623A5AD559AAF6252052782BF9A46104E443A3932D25AAE8F8C59
+F10875FAD3CBD885CE68665F2C826B1E1735EE2FDF0A1965149DF353EE0BE81F3EC133922EF
+43EBC09EF755FBD740C8E4D024B033F0E8F3449C94102902E143433262CDA1925A2B7FD01BE
+F26CD51A1FC22EDD49623EE9DEB14C138A7A6C47B677F033BDEB849738C3AE5935A2F54B992
+37912F2958FDFB82217C175448AA8230FDCB3B3869824A826635B538D47D847D8479A88F350
+E24B31787DFD60DE5E260B265829E036BE340FFC0D8C05555E75092226E7D54DEB42E1BB2CA
+9661A882FB718E7AA53F1E606
+Höchstmögliche Zahl:
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF88EF
+A9EBE89EFA99FBDAA8888888888888888888888888888888888888888888888888888888888
+888888888888888888888888888888888888888888888888888888888888888888888888888
+888888888888888888888888888888888888888888888888888888888888888888888888888
+888888888888888888888888888888888888888888888888888888888888888888888888888
+8888888888888888888888888
+1369 Umlegungen
+\end{lstlisting}
 \section{Quellcode}
 \lstinputlisting[language=python]{hexmax.py}
 
