@@ -122,7 +122,7 @@ hex_numbers = [
 ]
 
 
-def hex_repr(number):
+def sevseg_repr(number):
     result = []
     result.append(
         (u"\u2588" if number[0] or number[1] else " ")
@@ -152,8 +152,8 @@ def hex_repr(number):
     return result
 
 
-def print_hex_numbers(hex_numbers):
-    digits = [hex_repr(number) for number in hex_numbers]
+def print_sevseg_numbers(hex_numbers):
+    digits = [sevseg_repr(number) for number in hex_numbers]
     for i in range(5):
         print(" ".join(digit[i] for digit in digits))
 
@@ -240,12 +240,20 @@ def find_best(number_old, max_moves, max_moves_rev, difference_sum):
     return None, False
 
 
+# leert alle caches
+def clear_caches():
+    find_best.cache_clear()
+    concat.cache_clear()
+    n_moves.cache_clear()
+    max_difference.cache_clear()
+    min_difference.cache_clear()
+
 
 # findet einzelne umlegungen, um von einer position zu einer anderen zu kommen.
 def single_moves(number_old, number_new):
     number_curr = list(number_old)
     
-    print_hex_numbers(number_curr)
+    print_sevseg_numbers(number_curr)
     moves = []
     number_new = list(number_new)
     # gehe alle segmente von number_curr durch, bis es gleich number_new ist
@@ -273,7 +281,7 @@ def single_moves(number_old, number_new):
                                 number_curr[l] = HashableArray(vals)
                                 moves.append(((i, k), (l, m)))
                                 print("->")
-                                print_hex_numbers(number_curr)
+                                print_sevseg_numbers(number_curr)
                                 break
                         else:
                             continue
@@ -305,8 +313,9 @@ def main():
     print("Höchstmögliche Zahl:")
     print("".join([hex_numbers[number] for number in best_remapped]))
     print(f"{n_moves(concat(number_parsed), concat(best))} Umlegungen")
-    print("Zwischenstände:")
+    
     if print_steps:
+        print("Zwischenstände:")
         single_moves(number_parsed, best)
 
 
