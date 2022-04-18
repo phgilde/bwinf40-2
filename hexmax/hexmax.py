@@ -32,7 +32,7 @@ class HashableArray:
         return str(self)
 
     def __str__(self):
-        return f"Digit({self.vals})"
+        return f"{self.vals}"
 
     def __eq__(self, other):
         if isinstance(other, HashableArray):
@@ -43,6 +43,9 @@ class HashableArray:
                 ]
             )
         return False
+    
+    def __getitem__(self, key):
+        return self.vals[key]
 
 
 # Repräsentationen der 16 Ziffer in aufsteigender Reihenfolge
@@ -117,6 +120,42 @@ hex_numbers = [
     "E",
     "F",
 ]
+
+
+def hex_repr(number):
+    result = []
+    result.append(
+        (u"\u2588" if number[0] or number[1] else " ")
+        + (u"\u2588" if number[0] else " ")
+        + (u"\u2588" if number[0] or number[2] else " ")
+    )
+    result.append(
+        (u"\u2588" if number[1] else " ")
+        + (" ")
+        + (u"\u2588" if number[2] else " ")
+    )
+    result.append(
+        (u"\u2588" if number[3] or number[1] or number[4] else " ")
+        + (u"\u2588" if number[3] else " ")
+        + (u"\u2588" if number[3] or number[2] or number[5] else " ")
+    )
+    result.append(
+        (u"\u2588" if number[4] else " ")
+        + (" ")
+        + (u"\u2588" if number[5] else " ")
+    )
+    result.append(
+        (u"\u2588" if number[6] or number[4] else " ")
+        + (u"\u2588" if number[6] else " ")
+        + (u"\u2588" if number[6] or number[5] else " ")
+    )
+    return result
+
+
+def print_hex_numbers(hex_numbers):
+    digits = [hex_repr(number) for number in hex_numbers]
+    for i in range(5):
+        print(" ".join(digit[i] for digit in digits))
 
 
 # verbindet eine liste von digits zu einer einzelnen
@@ -201,9 +240,12 @@ def find_best(number_old, max_moves, max_moves_rev, difference_sum):
     return None, False
 
 
-# findet einzelne umlegungen, um von einer umlegung zu einer anderen zu kommen.
+
+# findet einzelne umlegungen, um von einer position zu einer anderen zu kommen.
 def single_moves(number_old, number_new):
     number_curr = list(number_old)
+    
+    print_hex_numbers(number_curr)
     moves = []
     number_new = list(number_new)
     # gehe alle segmente von number_curr durch, bis es gleich number_new ist
@@ -230,6 +272,8 @@ def single_moves(number_old, number_new):
                                 vals[m] = True
                                 number_curr[l] = HashableArray(vals)
                                 moves.append(((i, k), (l, m)))
+                                print("->")
+                                print_hex_numbers(number_curr)
                                 break
                         else:
                             continue
@@ -256,19 +300,14 @@ def main():
     number_mappings_list = number_mappings
     best_remapped = [number_mappings_list.index(digit) for digit in best]
     print()
+    print("Ursprüngliche Zahl:")
     print(number_str)
+    print("Höchstmögliche Zahl:")
     print("".join([hex_numbers[number] for number in best_remapped]))
-    print(
-        concat(number_parsed).sum,
-        concat(best).sum,
-    )
-    print(n_moves(concat(number_parsed), concat(best)))
+    print(f"{n_moves(concat(number_parsed), concat(best))} Umlegungen")
+    print("Zwischenstände:")
     if print_steps:
-        print(
-            "\n".join(
-                (str(move) for move in single_moves(number_parsed, best))
-            )
-        )
+        single_moves(number_parsed, best)
 
 
 if __name__ == "__main__":
