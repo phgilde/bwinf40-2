@@ -113,7 +113,7 @@ Die Wahrscheinlichkeit, dass $h$ Karten mit jeweils $b$ Bits voneinander linear 
 p_h = \prod^h_{i=1} (1-2^{i-1-b})
 \end{align*}
 Diese ist für $h=n-1=110$ und $b=m=128$ hoch genug, um den anderen Fall zunächst außen vor zu lassen. Somit sind alle bis auf eine der $111$ Karten linear unabhängig voneinander. Der Nullraum besteht damit aus nur $q=n-(n-1)=n-n+1=1$ Vektor. Dieser muss an den Stellen der $11$ echten Karten $1$ und sonst überall $0$ sein. Somit haben wir die echten Karten gefunden. \\
-Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfahren verwendet. Dabei wird zuerst $K^T$ mit der Identitätsmatrix zu $\left[\frac{K^T}{I}\right]$ erweitert. $\left[\frac{K^T}{I}\right]^T$ wird dann mithilfe des Gauß-Jordan-Algorithmus in Stufenform gebracht, was dann in der Matrix $\left[\frac{B}{C}\right]^T$ resultiert. Die Basis des Nullraums bilden die Spalten von $C$, deren entsprechende Spalten in $B$ Null sind. Das lässt sich damit begründen, dass die elementaren Reihentransformationen der Transponierten beziehungsweise elementaren Spaltentransformationen der Multiplikation mit einer Matrix $P$ entsprechen, also $\left[\frac{K^T}{I}\right] P = \left[\frac{B}{C}\right]$. Daraus folgt $I P = P = C$ und $K^T P = K^T C = B$.
+Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfahren verwendet. Dabei wird zuerst $K^T$ mit der Identitätsmatrix zu $\left[\frac{K^T}{I}\right]$ erweitert. $\left[\frac{K^T}{I}\right]^T=[K|I]$ wird mithilfe des Gauß-Jordan-Algorithmus in Stufenform gebracht, was dann in der sich in Stufenform befindenden Matrix $\left[\frac{B}{C}\right]^T$ resultiert. Die Matrix $\left[\frac{B}{C}\right]$ befindet sich in Spaltenstufenform. Die Basis des Nullraums bilden die Spalten von $C$, deren entsprechende Spalten in $B$ Null sind. Das lässt sich damit begründen, dass die elementaren Reihentransformationen der Transponierten beziehungsweise elementaren Spaltentransformationen der Multiplikation mit einer Matrix $P$ entsprechen, also $\left[\frac{K^T}{I}\right] P = \left[\frac{B}{C}\right]$. Daraus folgt $I P = P = C$ und $K^T P = K^T C = B$.
 \begin{align*}
 && K^T C &= B  &&|\cdot C^{-1}\\
 \leftrightarrow && K^T &= BC^{-1} &&|\cdot v \\
@@ -121,15 +121,145 @@ Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfah
 && &= Bw && | \text{Damit $v$ zum Nullraum gehört, wird verlangt:}\\
 && &= 0 
 \end{align*}
-Weil alle Spalten in $B$, die nicht Null sind, linear unabhängig voneinander sind (Das bedeutet nämlich Spaltenstufenform), gilt $Bw=0$ nur wenn die Einträge von $w$, die nicht Null sind, den Nullspalten von $B$ entsprechen. Die Basis der Vektoren $w$, für die $Bw=0$ gilt, sind also die verschiedenen Vektoren, die eine Eins bei einer Nullspalte von $B$ und sonst überall Nullen haben. Da $C^{-1} v = w \leftrightarrow v = C w$ definiert wurde, sind die Spalten von $C$, die den Nullspalten von $B$ entsprechen, die Basis des Nullraums. \\\\
+Weil alle Spalten in $B$, die nicht Null sind, linear unabhängig voneinander sind (das ist eine Folge der Spaltenstufenform), gilt $Bw=0$ nur wenn die Einträge von $w$, die nicht Null sind, den Nullspalten von $B$ entsprechen. Die Basis der Vektoren $w$, für die $Bw=0$ gilt, sind also die verschiedenen Vektoren, die eine Eins bei einer Nullspalte von $B$ und sonst überall Nullen haben. Da $C^{-1} v = w \leftrightarrow v = C w$ definiert wurde, sind die Spalten von $C$, die den Nullspalten von $B$ entsprechen, die Basis des Nullraums. \\
+Das Verfahren soll an einem Beispiel illustriert werden:
+\begin{align*}
+K &= \left[ \begin{array}{cccccc}
+0 & 1 & 0 & 0 & 1 & 1 \\
+1 & 1 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 \\
+1 & 0 & 0 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 \\
+1 & 0 & 1 & 0 & 1 & 1 \\
+\end{array} \right] \\
+[K | I] &= \left[ \begin{array}{cccccc|cccccc}
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\end{array} \right]
+\end{align*} 
+Um die Stufenform zu erreichen, muss zuerst in der transformierten Matrix $M$ $M_{1,1} = 1$ sein. Dafür wird eine Reihe, deren erstes Element 1 ist, zur ersten Reihe addiert. Hier wird das mit der zweiten Reihe getan:
+\begin{align*}
+\left[ \begin{array}{cccccc|cccccc}
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\end{array} \right] 
+\rightarrow \left[ \begin{array}{cccccc|cccccc}
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\end{array} \right]
+\end{align*}
+Damit nun nur das erste Element der ersten Spalte 1 ist, wird die erste Reihe zu jeder anderen Reihe addiert, deren erstes Element 1 ist:
+\begin{align*}
+\left[ \begin{array}{cccccc|cccccc}
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+1 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\end{array} \right]
+\rightarrow \left[ \begin{array}{cccccc|cccccc}
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 1 \\
+\end{array} \right]
+\end{align*}
+Die zweite Spalte hat schon die richtige Form, die dritte hingegen nicht. Also wird die dritte Reihe zu jeder Reihe addiert, deren drittes Element 1 ist:
+\begin{align*}
+\left[ \begin{array}{cccccc|cccccc}
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 1 \\
+\end{array} \right]
+\rightarrow \left[ \begin{array}{cccccc|cccccc}
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 \\
+\end{array} \right]
+\end{align*}
+So wird auch in der vierten und fünften Spalte weitergemacht:
+\begin{align*}
+\left[ \begin{array}{cccccc|cccccc}
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 \\
+\end{array} \right]
+\rightarrow \left[ \begin{array}{cccccc|cccccc}
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 1 \\
+\end{array} \right] \\
+\rightarrow \left[ \begin{array}{cccccc|cccccc}
+1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+\end{array} \right]
+\end{align*}
+Die Matrix befindet sich jetzt in Stufenform, es handelt sich um $\left[\frac{B}{C}\right]^T$. Somit ist
+\begin{align*}
+\left[\frac{B}{C}\right]&=\left[ \begin{array}{cccccc}
+1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+1 & 1 & 0 & 1 & 0 & 0 \\
+\hline
+1 & 1 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 1 & 0 & 0 \\
+0 & 1 & 1 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 \\
+0 & 1 & 0 & 1 & 1 & 1 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+\end{array} \right]
+\end{align*}
+Weil nur die letzte Spalte von $B$ Null ist, ist die letzte Spalte von $C$ die Basis des Nullraums. Die Öffnungskarten sind also die letzten drei:
+\begin{align*}
+\begin{array}{cccccc}
+1 & 0 & 0 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 \\
+1 & 0 & 1 & 0 & 1 & 1 \\
+\end{array}
+\end{align*}
+Wie man sieht, ist jede der Karten das XOR der anderen beiden, und die Lösung somit korrekt. \\\\
 Wenn $q>1$ ist, kann es sein, dass keiner der Basisvektoren des Nullraums 11 Einsen beinhaltet, sondern eine Linearkombination dieser. In diesem Fall wird jede der $2^q$ Kombinationen der Basisvektoren durchprobiert, bis eine davon $11$ Eisen enthält.\\\\
 Die richtige Karte für das $s$-te Haus kann gefunden werden, in dem man die Karten aufsteigend sortiert und zuerst die $s$-te und dann die $s+1$-te Karte ausprobiert. Wenn die Sicherungskarte kleiner als die Öffnungskarte des $s$-ten Hauses ist, liegt sie davor im Stapel und die Öffnungskarte an der Stelle $s+1$. Wenn sie größer ist, dann liegt sie dahinter im Stapel und die Öffnungskarte an Stelle $s$.\\
 \\
 Das Verfahren stößt an seine Grenzen, wenn $n>m$ ist. Der Rang von $K^T$ ist dann nämlich höchstens $m$, wodurch der Nullraum $q=n-m$ Basisvektoren hat. Diese Basisvektoren müssen nun nicht zwangsweise einen mit 11 Einsen beinhalten, dieser könnte auch eine Linearkombination der anderen Basisvektoren sein. Wenn das der Fall ist, müsste man alle $2^q$ Kombinationen von Basisvektoren durchprobieren, bis eine davon $11$ Einsen beinhaltet, was für die Beispieleingabe auf der BwInf-Webseite mit $161$ Karten zu je $128$ Bit $2^q=2^{n-m}=2^{161-128}=2^{33}=8.589.934.592$ Kombinationen sind. Diese lassen sich nicht wirklich in überschaubarer Zeit durchprobieren.
 \section{Umsetzung}
-Die Lösung wurde in Python umgesetzt. Dabei wurde die Bibliothek \lstinline|NumPy| verwendet, um die Koeffizientenmatrizen darzustellen. 
+Die Lösung wurde in Python umgesetzt. Dabei wurde die Bibliothek \lstinline|NumPy| verwendet, um die Matrizen darzustellen. 
 \section{Laufzeit}
-Ein Durchlauf des Gauß-Jordan-Algorithmus hat eine Laufzeit von $\mathcal{O}(n^3)$. Der Algorithmus wird einmal ursprünglich und dann für jeden der $q$ Basisvektoren des Nullraums durchgeführt, somit ist die Laufzeit $\mathcal{O}((q+1)n^3)$
+Der Gauß-Jordan-Algorithmus hat für eine erweiterte Matrix mit $u$ Spalten in der linken und $v$ Spalten in der rechten Matrix und $w$ Reihen eine Laufzeitordnung von $\mathcal{O}(wu(u+v))$, denn für jede der $u$ Spalten der linken Matrix muss eine Reihe zu allen $w$ anderen Reihen XOR-t werden, also mit allen $u+v$ Elementen jeder Reihe. Weil die rechte Matrix eine Identitätsmatrix ist, hat diese so viele Reihen wie Spalten, also $w$ Reihen und $w$ Spalten. Somit ist $v=w$ und die Laufzeitordnung $\mathcal{O}(wu(u+w))=\mathcal{O}(wu^2+uw^2)$. Die Matrix $K^T$, für die der Algorithmus durchgeführt wird, hat die Dimensionen $m \times n$. 
 \section{Beispiele}
 
 \section{Quellcode}
