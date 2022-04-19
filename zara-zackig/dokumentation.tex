@@ -104,7 +104,7 @@ K_{1, m} v_1 + K_{2, m} v_2 + \ldots + K_{n, m} v_n &= 0 \\
 \end{align*}
 In Matrixform:
 \begin{align*}
-K^T \cdot v = 0
+K^T v = 0
 \end{align*}
 Dabei bestimmt $v_n$, ob die n-te Karte zu den gesuchten Karten gehört. \\
 Die Menge von Vektoren, die sich oben für $v$ einsetzen lassen, wird als Nullraum oder Kern der Matrix $K^T$ bezeichnet. In $GF(2)$ kann ein Vektor nicht skaliert werden, weil er nur mit entweder $0$ oder $1$ multipliziert werden kann. Somit besteht der Nullraum aus allen möglichen Kombinationen von Summen der Basisvektoren. Wenn $r$ der Rang von $K^T$ ist, dann ist $q=n-r$ die Anzahl der Basisvektoren des Nullraums. Der Rang von $K^T$ ist die Anzahl linear unabhängiger Zeilen beziehungsweise Spalten (diese beiden Werte sind gleich). Wenn, wie in der ursprünglichen Aufgabe, $n<m$, dann ist der Rang in der Regel $n-1$, denn nur eine Karte, die Wiederherstellungskarte, ist linear abhängig von den anderen. \\
@@ -113,204 +113,15 @@ Die Wahrscheinlichkeit, dass $h$ Karten mit jeweils $b$ Bits voneinander linear 
 p_h = \prod^h_{i=1} (1-2^{i-1-b})
 \end{align*}
 Diese ist für $h=n-1=110$ und $b=m=128$ hoch genug, um den anderen Fall zunächst außen vor zu lassen. Somit sind alle bis auf eine der $111$ Karten linear unabhängig voneinander. Der Nullraum besteht damit aus nur $q=n-(n-1)=n-n+1=1$ Vektor. Dieser muss an den Stellen der $11$ echten Karten $1$ und sonst überall $0$ sein. Somit haben wir die echten Karten gefunden. \\
-Um die Basisvektoren zu finden, muss man $K^T \cdot v = 0$ zunächst mit dem Gauß-Jordan-Algorithmus in Stufenform bringen. Aus dieser Stufenform kann man die freien Variablen des Gleichungssystems ablesen. Die Basisvektoren des Nullraums lassen sich finden, in dem man nacheinander jede der freien Variablen auf 1 und alle anderen auf 1 setzt und dann das daraus resultierende Gleichungssystem wiederum mit dem Gauß-Jordan-Algorithmus auf Stufenform bringt. Dann lässt sich der Basisvektor auf der rechten Seite der Gleichung ablesen. Dieses Verfahren soll an einem Beispiel erklärt werden:
+Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfahren verwendet. Dabei wird zuerst $K^T$ mit der Identitätsmatrix zu $\left[\frac{K^T}{I}\right]$ erweitert. $\left[\frac{K^T}{I}\right]^T$ wird dann mithilfe des Gauß-Jordan-Algorithmus in Stufenform gebracht, was dann in der Matrix $\left[\frac{B}{C}\right]^T$ resultiert. Die Basis des Nullraums bilden die Spalten von $C$, deren entsprechende Spalten in $B$ Null sind. Das lässt sich damit begründen, dass die elementaren Reihentransformationen der Transponierten beziehungsweise elementaren Spaltentransformationen der Multiplikation mit einer Matrix $P$ entsprechen, also $\left[\frac{K^T}{I}\right] P = \left[\frac{B}{C}\right]$. Daraus folgt $I P = P = C$ und $K^T P = K^T C = B$.
 \begin{align*}
-K&= \left[
-\begin{array}{ccccccc}
-1 & 0 & 0 & 1 & 1 & 0 & 1 \\ 
-0 & 1 & 0 & 1 & 0 & 1 & 0 \\ 
-1 & 0 & 1 & 1 & 0 & 0 & 1 \\ 
-0 & 0 & 0 & 1 & 1 & 0 & 1 \\ 
-1 & 1 & 1 & 0 & 0 & 1 & 0 \\ 
-1 & 0 & 0 & 0 & 1 & 1 & 0 \\ 
-0 & 1 & 1 & 0 & 1 & 0 & 0
-\end{array} \right] \\
-K^T&=\left[
-\begin{array}{ccccccc}
-1&0&1&0&1&1&0\\
-0&1&0&0&1&0&1\\
-0&0&1&0&1&0&1\\
-1&1&1&1&0&0&0\\
-1&0&0&1&0&1&1\\
-0&1&0&0&1&1&0\\
-1&0&1&1&0&0&0\\
-\end{array}\right]\\
-K^T \cdot v &= 0\\
+&& K^T C &= B  &&|\cdot C^{-1}\\
+\leftrightarrow && K^T &= BC^{-1} &&|\cdot v \\
+\leftrightarrow && K^T v &= BC^{-1} v && | \text{Es wird $C^{-1}v = w$ gesetzt}\\
+&& &= Bw && | \text{Damit $v$ zum Nullraum gehört, wird verlangt:}\\
+&& &= 0 
 \end{align*}
-Ich verwende im Folgenden der Einfachheit halber die erweiterte Koeffizientenmatrix, welche für dieses Gleichungssystem so aussieht:
-\begin{align*}
-(K^T|0)=\left[\begin{array}{ccccccc|c}
-1&0&1&0&1&1&0&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-1&1&1&1&0&0&0&0\\
-1&0&0&1&0&1&1&0\\
-0&1&0&0&1&1&0&0\\
-1&0&1&1&0&0&0&0\\
-\end{array}\right]\\
-\end{align*}
-Der "klassische" Gauß-Jordan-Algorithmus basiert darauf, dass die sich die Lösungsmenge nicht verändert, wenn man im Gleichungssystem eine Zeile zu einer anderen addiert, oder eine Zeile mit einem Wert multipliziert. In $GF(2)$ gilt das selbe: Man kann eine Zeile zu einer anderen addieren (beziehunsweise XOR-en), ohne die Lösungsmenge zu verändern, weil eine Gleichung ja auf beiden Seiten den gleichen Wert hat. Um das Gleichungssystem auf Stufenform zu bringen, muss in möglichst vielen Reihen der erste Wert in seiner Spalte allein sein. Als erstes soll in der ersten Spalte nur eine eins stehen, und zwar in der ersten Reihe. Dafür wird die erste Reihe zu allen Reihen addiert, deren erster Wert nicht Null ist, denn dadurch wird aus diesen eine Null:
-\begin{align*}
-\left[\begin{array}{ccccccc|c}
-1&0&1&0&1&1&0&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-1&1&1&1&0&0&0&0\\
-1&0&0&1&0&1&1&0\\
-0&1&0&0&1&1&0&0\\
-1&0&1&1&0&0&0&0\\
-\end{array}\right]
-\rightarrow\left[\begin{array}{ccccccc|c}
-1&0&1&0&1&1&0&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&1&0&1&1&1&0&0\\
-0&0&1&1&1&0&1&0\\
-0&1&0&0&1&1&0&0\\
-0&0&0&1&1&1&0&0\\
-\end{array}\right]\\
-\end{align*}
-In der zweiten Zeile soll die eins in der zweiten Spalte allein stehen. Dafür wird genauso verfahren:
-\begin{align*}
-\left[\begin{array}{ccccccc|c}
-1&0&1&0&1&1&0&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&1&0&1&1&1&0&0\\
-0&0&1&1&1&0&1&0\\
-0&1&0&0&1&1&0&0\\
-0&0&0&1&1&1&0&0\\
-\end{array}\right]
-\rightarrow \left[\begin{array}{ccccccc|c}
-1&0&1&0&1&1&0&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&0&0&1&0&1&1&0\\
-0&0&1&1&1&0&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&1&1&1&0&0\\
-\end{array}\right]\\
-\end{align*}
-Für die restlichen Reihen wird genauso verfahren:
-\begin{align*}
-\left[\begin{array}{ccccccc|c}
-1&0&1&0&1&1&0&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&0&0&1&0&1&1&0\\
-0&0&1&1&1&0&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&1&1&1&0&0\\
-\end{array}\right]
-\rightarrow \left[\begin{array}{ccccccc|c}
-1&0&0&0&0&1&1&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&0&0&1&0&1&1&0\\
-0&0&0&1&0&0&0&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&1&1&1&0&0\\
-\end{array}\right]
-\rightarrow \left[\begin{array}{ccccccc|c}
-1&0&0&0&0&1&1&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&0&0&1&0&1&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&1&0&1&0\\
-\end{array}\right]\\
-\end{align*}
-In der fünften Reihe ist das Element in der fünften Spalte Null. Um daraus eine 1 zu machen, wird eine beliebige darunterliegende Reihe, die eine Eins an an fünfter Stelle hat, zur fünften addiert.
-\begin{align*}
-\left[\begin{array}{ccccccc|c}
-1&0&0&0&0&1&1&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&0&0&1&0&1&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&1&0&1&0\\
-\end{array}\right]
-\rightarrow \left[\begin{array}{ccccccc|c}
-1&0&0&0&0&1&1&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&0&0&1&0&1&1&0\\
-0&0&0&0&1&1&0&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&1&0&1&0\\
-\end{array}\right]\\
-\end{align*}
-Dann wird wie vorher weitergemacht:
-\begin{align*}
-\left[\begin{array}{ccccccc|c}
-1&0&0&0&0&1&1&0\\
-0&1&0&0&1&0&1&0\\
-0&0&1&0&1&0&1&0\\
-0&0&0&1&0&1&1&0\\
-0&0&0&0&1&1&0&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&1&0&1&0\\
-\end{array}\right]
-\rightarrow \left[\begin{array}{ccccccc|c}
-1&0&0&0&0&1&1&0\\
-0&1&0&0&0&1&1&0\\
-0&0&1&0&0&1&1&0\\
-0&0&0&1&0&1&1&0\\
-0&0&0&0&1&1&0&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&0&1&1&0\\
-\end{array}\right]
-\rightarrow \left[\begin{array}{ccccccc|c}
-1&0&0&0&0&0&0&0\\
-0&1&0&0&0&0&0&0\\
-0&0&1&0&0&0&0&0\\
-0&0&0&1&0&0&0&0\\
-0&0&0&0&1&0&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&0&0&0&0\\
-\end{array}\right]\\
-\end{align*}
-Die Koeffizientenmatrix ist jetzt also in Stufenform. Die einzige freie Variable ist $v_7$. Diese wird auf 1 gesetzt und die Matrix auf Stufenform gebracht:
-\begin{align*}
-\left[\begin{array}{ccccccc|c}
-1&0&0&0&0&0&0&0\\
-0&1&0&0&0&0&0&0\\
-0&0&1&0&0&0&0&0\\
-0&0&0&1&0&0&0&0\\
-0&0&0&0&1&0&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&0&0&0&0\\
-\end{array}\right]
-\rightarrow \left[\begin{array}{ccccccc|c}
-1&0&0&0&0&0&0&0\\
-0&1&0&0&0&0&0&0\\
-0&0&1&0&0&0&0&0\\
-0&0&0&1&0&0&0&0\\
-0&0&0&0&1&0&1&0\\
-0&0&0&0&0&1&1&0\\
-0&0&0&0&0&0&1&1\\
-\end{array}\right]
-\rightarrow \left[\begin{array}{ccccccc|c}
-1&0&0&0&0&0&0&0\\
-0&1&0&0&0&0&0&0\\
-0&0&1&0&0&0&0&0\\
-0&0&0&1&0&0&0&0\\
-0&0&0&0&1&0&0&1\\
-0&0&0&0&0&1&0&1\\
-0&0&0&0&0&0&1&1\\
-\end{array}\right]\\
-\end{align*}
-Wie man ablesen kann, sind $v_5, v_6, v_7$ alle 1. Somit sind die drei Öffnungskarten die letzten drei:
-\begin{align*}
-\begin{array}{ccccccc}
-1 & 1 & 1 & 0 & 0 & 1 & 0 \\ 
-1 & 0 & 0 & 0 & 1 & 1 & 0 \\ 
-0 & 1 & 1 & 0 & 1 & 0 & 0
-\end{array}
-\end{align*}
-Wie man sieht, ist diese Lösung korrekt, denn jede Karte ist das XOR der jeweils anderen beiden.\\\\
+Weil alle Spalten in $B$, die nicht Null sind, linear unabhängig voneinander sind (Das bedeutet nämlich Spaltenstufenform), gilt $Bw=0$ nur wenn die Einträge von $w$, die nicht Null sind, den Nullspalten von $B$ entsprechen. Die Basis der Vektoren $w$, für die $Bw=0$ gilt, sind also die verschiedenen Vektoren, die eine Eins bei einer Nullspalte von $B$ und sonst überall Nullen haben. Da $C^{-1} v = w \leftrightarrow v = C w$ definiert wurde, sind die Spalten von $C$, die den Nullspalten von $B$ entsprechen, die Basis des Nullraums. \\\\
 Wenn $q>1$ ist, kann es sein, dass keiner der Basisvektoren des Nullraums 11 Einsen beinhaltet, sondern eine Linearkombination dieser. In diesem Fall wird jede der $2^q$ Kombinationen der Basisvektoren durchprobiert, bis eine davon $11$ Eisen enthält.\\\\
 Die richtige Karte für das $s$-te Haus kann gefunden werden, in dem man die Karten aufsteigend sortiert und zuerst die $s$-te und dann die $s+1$-te Karte ausprobiert. Wenn die Sicherungskarte kleiner als die Öffnungskarte des $s$-ten Hauses ist, liegt sie davor im Stapel und die Öffnungskarte an der Stelle $s+1$. Wenn sie größer ist, dann liegt sie dahinter im Stapel und die Öffnungskarte an Stelle $s$.\\
 \\
@@ -322,6 +133,7 @@ Ein Durchlauf des Gauß-Jordan-Algorithmus hat eine Laufzeit von $\mathcal{O}(n^
 \section{Beispiele}
 
 \section{Quellcode}
+
 \bibliography{referenzen}
 \bibliographystyle{ieeetr}
 \end{document}
