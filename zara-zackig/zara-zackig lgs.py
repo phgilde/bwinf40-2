@@ -2,11 +2,13 @@ from re import I
 import sys
 import numpy as np
 from itertools import product
+from progressbar import progressbar
 
 # gauss-jordan-algorithmus
+
+
 def gauss_jordan(matrix, result):
-    # bildung der erweiterten koeffizientenmatrix
-    print(matrix.shape, result.shape)
+    # bildung der erweiterten matrix
     result_matrix = np.concatenate((matrix, result), axis=1)
     row = 0
     for column in range(matrix.shape[1]):
@@ -21,43 +23,13 @@ def gauss_jordan(matrix, result):
             if result_matrix[xor_row, column] and xor_row != row:
                 result_matrix[xor_row] ^= result_matrix[row]
         row += 1
+        if row == matrix.shape[0]:
+            break
     return result_matrix
 
 
-def add_free_coeffs(matrix):
-    matrix = np.copy(matrix)
-    empty_row_pos = empty_row_start(matrix)
-
-    i, k = 0, 0
-    while i < matrix.shape[1]:
-        if matrix[k, i]:
-            k += 1
-        else:
-            matrix[empty_row_pos, i] = 1
-            empty_row_pos += 1
-        i += 1
-    return matrix
-
-
-def empty_row_start(matrix):
-    i = 0
-
-    while any(matrix[i]):
-        i += 1
-    empty_row_pos = i
-    return empty_row_pos
-
-
-def null_space_size(rref_matrix):
-    result = 0
-    for i in range(rref_matrix.shape[1]):
-        if np.sum(rref_matrix[:, i].astype(int)) != 1:
-            result += 1
-    return result
-
-
 def null_space(matrix):
-    if matrix.shape[1] > matrix.shape[0]:
+    if matrix.shape[1] > matrix.shape[0] and False:
         matrix = np.concatenate(
             (
                 matrix,
@@ -68,12 +40,9 @@ def null_space(matrix):
             ),
             axis=0,
         )
-    print(matrix.shape)
-    rref = gauss_jordan(
-        matrix.T, np.identity(matrix.shape[1], dtype=bool)
-    ).T
-    top_half = rref[:matrix.shape[0]]
-    bottom_half = rref[matrix.shape[0]:]
+    rref = gauss_jordan(matrix.T, np.identity(matrix.shape[1], dtype=bool)).T
+    top_half = rref[: matrix.shape[0]]
+    bottom_half = rref[matrix.shape[0] :]
     null_space = []
     for i in range(top_half.shape[1]):
         if not any(top_half[:, i]):
@@ -104,16 +73,22 @@ print(f"{count_zero}/{null_space.shape[0]} null vectors correct")
 
 
 null_space_int = null_space.astype(int)
-for null_vector in null_space_int:
-    if np.sum(null_vector) == n_opening_cards + 1:
-        print(null_vector)
+for null_vector in null_space:
+    if np.sum(null_vector.astype(int)) == n_opening_cards + 1:
+        print("Echte Karten: ")
+        print(cards.T[null_vector].astype(int))
         break
 else:
-    for combination_factors in product([False, True], repeat=null_space.shape[0]):
+    print("Kein passender Basisvektor, suche Kombination...")
+    for combination_factors in progressbar(
+        product([False, True], repeat=null_space.shape[0]),
+        max_value=2 ** null_space.shape[0],
+    ):
         combination = np.zeros(null_space.shape[1], dtype=bool)
         for i, factor in enumerate(combination_factors):
             if factor:
                 combination ^= null_space[i]
         if np.sum(combination.astype(int)) == n_opening_cards + 1:
-            print(null_vector)
+            print("Echte Karten: ")
+            print(cards.T[null_vector].astype(int))
             break
