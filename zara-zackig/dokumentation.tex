@@ -95,7 +95,7 @@ Von den gegebenen $n$ Karten mit jeweils $m$ Bits werden $p$ Karten gesucht, so 
 && k_1 \xor k_2 \xor \ldots \xor k_{p-1} &= k_p && |\xor k_p \\
 \leftrightarrow && k_1 \xor k_2 \xor \ldots \xor k_{p-1} \xor k_p &= 0 &&
 \end{align*}
-Diese Gleichung lässt sich zu jeder der $p$ Karten umstellen. Es werden also $p$ Karten gesucht, deren XOR gleich einer Karte mit $m$ Nullen ist. Dieses Problem lässt sich umformulieren zu einem linearen Gleichungssystem im Galois-Feld $GF(2)$. Dieses besteht nur aus den beiden Elementen 0 und 1. Die Addition im Feld entspricht dem XOR, die Multiplikation einem UND. Die gemischten Karten entsprechen der Matrix $K \in GF(2)^{n \times m}$. $K_n$ ist dabei die n-te Karte und $K_{n,m}$ das m-te Bit der n-ten Karte. Gesucht wird der Vektor $v \in GF(2)^n$, so dass dieses lineare Gleichungssystem gilt:
+Diese Gleichung lässt sich zu jeder der $p$ Karten umstellen. Es werden also $p$ Karten gesucht, deren XOR gleich einer Karte mit $m$ Nullen ist. Dieses Problem lässt sich umformulieren zu einem linearen Gleichungssystem im Galois-Feld $GF(2)$. Dieses besteht nur aus den beiden Elementen 0 und 1. Die Addition im Feld entspricht dem XOR, die Multiplikation einem UND. Weil in dem Feld Multiplikationen und Additionen definiert sind, ist lineare Algebra in dem Feld möglich. Die gemischten Karten entsprechen der Matrix $K \in GF(2)^{n \times m}$. $K_n$ ist dabei die n-te Karte und $K_{n,m}$ das m-te Bit der n-ten Karte. Gesucht wird der Vektor $v \in GF(2)^n$, so dass dieses lineare Gleichungssystem gilt:
 \begin{align*}
 K_{1, 1} v_1 + K_{2, 1} v_2 + \ldots + K_{n, 1} v_n &= 0 \\
 K_{1, 2} v_1 + K_{2, 2} v_2 + \ldots + K_{n, 2} v_n &= 0 \\
@@ -115,13 +115,13 @@ p_h = \prod^h_{i=1} (1-2^{i-1-b})
 Diese ist für $h=n-1=110$ und $b=m=128$ hoch genug, um den anderen Fall zunächst außen vor zu lassen. Somit sind alle bis auf eine der $111$ Karten linear unabhängig voneinander. Der Nullraum besteht damit aus nur $q=n-(n-1)=n-n+1=1$ Vektor. Dieser muss an den Stellen der $11$ echten Karten $1$ und sonst überall $0$ sein. Somit haben wir die echten Karten gefunden. \\\\
 Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfahren verwendet. Dabei wird zuerst $K^T$ mit der Identitätsmatrix zu $\left[\frac{K^T}{I}\right]$ erweitert. $\left[\frac{K^T}{I}\right]^T=[K|I]$ wird mithilfe des Gauß-Jordan-Algorithmus in Stufenform gebracht, was dann in der sich in Stufenform befindenden Matrix $\left[\frac{B}{C}\right]^T$ resultiert. Die Matrix $\left[\frac{B}{C}\right]$ befindet sich in Spaltenstufenform. Die Basis des Nullraums bilden die Spalten von $C$, deren entsprechende Spalten in $B$ Null sind. Das lässt sich folgendermaßen begründen: Die elementaren Reihentransformationen der Transponierten entsprechen elementaren Spaltentransformationen, welche einer Multiplikation mit einer Matrix $P$ entsprechen. Diese setzt sich als Produkt der einzelnen Schritte zusammen. Bei den Schritten handelt es sich immer um die Addition einer Spalte zu einer anderen, was der Multiplikation mit einer Matrix in oberer oder unterer Dreiecksform entspricht. Beispielsweise würde eine Multiplikation mit der Matrix
 \begin{align*}
-\begin{array}{ccc}
+\left[\begin{array}{ccc}
 1 & 1 & 0 \\
 0 & 1 & 0 \\
 0 & 0 & 1 \\
-\end{array}
+\end{array}\right]
 \end{align*}
-die erste Spalte zur zweiten addieren. Da diese Matrizen immer in Dreiecksform sind, weil sie neben der Diagonalen nur eine Element enthalten, sind sie immer invertierbar. Weil $P$ das Produkt von invertierbaren Matrizen ist, ist $P$ genau so invertierbar. \\
+die erste Spalte zur zweiten addieren. Da diese Matrizen immer in Dreiecksform sind, weil sie neben der Diagonalen nur eine Element enthalten, sind sie immer invertierbar. Somit ist $P$ als Produkt von invertierbaren Matrizen auch invertierbar. \\
 Es gilt also $\left[\frac{K^T}{I}\right] P = \left[\frac{B}{C}\right]$. Daraus folgt $I P = P = C$ und $K^T P = K^T C = B$.
 \begin{align*}
 && K^T C &= B  &&|\cdot C^{-1}\\
@@ -273,6 +273,7 @@ Der Gauß-Jordan-Algorithmus hat für eine erweiterte Matrix mit $u$ Spalten in 
 
 \section{Quellcode}
 
+\lstinputlisting[language=python]{zara-zackig.py}
 \bibliography{referenzen}
 \bibliographystyle{ieeetr}
 \end{document}
