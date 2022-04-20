@@ -112,8 +112,17 @@ Die Wahrscheinlichkeit, dass $h$ Karten mit jeweils $b$ Bits voneinander linear 
 \begin{align*}
 p_h = \prod^h_{i=1} (1-2^{i-1-b})
 \end{align*}
-Diese ist für $h=n-1=110$ und $b=m=128$ hoch genug, um den anderen Fall zunächst außen vor zu lassen. Somit sind alle bis auf eine der $111$ Karten linear unabhängig voneinander. Der Nullraum besteht damit aus nur $q=n-(n-1)=n-n+1=1$ Vektor. Dieser muss an den Stellen der $11$ echten Karten $1$ und sonst überall $0$ sein. Somit haben wir die echten Karten gefunden. \\
-Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfahren verwendet. Dabei wird zuerst $K^T$ mit der Identitätsmatrix zu $\left[\frac{K^T}{I}\right]$ erweitert. $\left[\frac{K^T}{I}\right]^T=[K|I]$ wird mithilfe des Gauß-Jordan-Algorithmus in Stufenform gebracht, was dann in der sich in Stufenform befindenden Matrix $\left[\frac{B}{C}\right]^T$ resultiert. Die Matrix $\left[\frac{B}{C}\right]$ befindet sich in Spaltenstufenform. Die Basis des Nullraums bilden die Spalten von $C$, deren entsprechende Spalten in $B$ Null sind. Das lässt sich damit begründen, dass die elementaren Reihentransformationen der Transponierten beziehungsweise elementaren Spaltentransformationen der Multiplikation mit einer Matrix $P$ entsprechen, also $\left[\frac{K^T}{I}\right] P = \left[\frac{B}{C}\right]$. Daraus folgt $I P = P = C$ und $K^T P = K^T C = B$.
+Diese ist für $h=n-1=110$ und $b=m=128$ hoch genug, um den anderen Fall zunächst außen vor zu lassen. Somit sind alle bis auf eine der $111$ Karten linear unabhängig voneinander. Der Nullraum besteht damit aus nur $q=n-(n-1)=n-n+1=1$ Vektor. Dieser muss an den Stellen der $11$ echten Karten $1$ und sonst überall $0$ sein. Somit haben wir die echten Karten gefunden. \\\\
+Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfahren verwendet. Dabei wird zuerst $K^T$ mit der Identitätsmatrix zu $\left[\frac{K^T}{I}\right]$ erweitert. $\left[\frac{K^T}{I}\right]^T=[K|I]$ wird mithilfe des Gauß-Jordan-Algorithmus in Stufenform gebracht, was dann in der sich in Stufenform befindenden Matrix $\left[\frac{B}{C}\right]^T$ resultiert. Die Matrix $\left[\frac{B}{C}\right]$ befindet sich in Spaltenstufenform. Die Basis des Nullraums bilden die Spalten von $C$, deren entsprechende Spalten in $B$ Null sind. Das lässt sich folgendermaßen begründen: Die elementaren Reihentransformationen der Transponierten entsprechen elementaren Spaltentransformationen, welche einer Multiplikation mit einer Matrix $P$ entsprechen. Diese setzt sich als Produkt der einzelnen Schritte zusammen. Bei den Schritten handelt es sich immer um die Addition einer Spalte zu einer anderen, was der Multiplikation mit einer Matrix in oberer oder unterer Dreiecksform entspricht. Beispielsweise würde eine Multiplikation mit der Matrix
+\begin{align*}
+\begin{array}{ccc}
+1 & 1 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{array}
+\end{align*}
+die erste Spalte zur zweiten addieren. Da diese Matrizen immer in Dreiecksform sind, weil sie neben der Diagonalen nur eine Element enthalten, sind sie immer invertierbar. Weil $P$ das Produkt von invertierbaren Matrizen ist, ist $P$ genau so invertierbar. \\
+Es gilt also $\left[\frac{K^T}{I}\right] P = \left[\frac{B}{C}\right]$. Daraus folgt $I P = P = C$ und $K^T P = K^T C = B$.
 \begin{align*}
 && K^T C &= B  &&|\cdot C^{-1}\\
 \leftrightarrow && K^T &= BC^{-1} &&|\cdot v \\
@@ -245,11 +254,11 @@ Die Matrix befindet sich jetzt in Stufenform, es handelt sich um $\left[\frac{B}
 \end{align*}
 Weil nur die letzte Spalte von $B$ Null ist, ist die letzte Spalte von $C$ die Basis des Nullraums. Die Öffnungskarten sind also die letzten drei:
 \begin{align*}
-\begin{array}{cccccc}
+\left[\begin{array}{cccccc}
 1 & 0 & 0 & 1 & 1 & 0 \\
 0 & 0 & 1 & 1 & 0 & 1 \\
 1 & 0 & 1 & 0 & 1 & 1 \\
-\end{array}
+\end{array}\right]
 \end{align*}
 Wie man sieht, ist jede der Karten das XOR der anderen beiden, und die Lösung somit korrekt. \\\\
 Wenn $q>1$ ist, kann es sein, dass keiner der Basisvektoren des Nullraums 11 Einsen beinhaltet, sondern eine Linearkombination dieser. In diesem Fall wird jede der $2^q$ Kombinationen der Basisvektoren durchprobiert, bis eine davon $11$ Eisen enthält.\\\\
