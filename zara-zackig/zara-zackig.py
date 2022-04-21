@@ -54,7 +54,7 @@ def null_space(matrix):
             null_space.append(bottom_half[:, i].reshape(-1))
     return np.array(null_space)
 
-
+np.set_printoptions(threshold=np.inf)
 # karten einlesen
 with open(input("Pfad: ")) as f:
     n_cards, n_opening_cards, n_bits = map(int, f.readline().split())
@@ -68,15 +68,6 @@ cards = np.array(cards_bool).T
 # nullraum der karten (K^T) berechnen
 null_space = null_space(cards)
 
-# überprüfung, ob alle nullvektoren korrekt sind
-count_zero = 0
-for null_vector in null_space:
-    xor = np.zeros((cards.shape[0]), dtype=bool)
-    for card in cards.T[null_vector]:
-        xor ^= card
-    if not any(xor):
-        count_zero += 1
-print(f"{count_zero}/{null_space.shape[0]} null vectors correct")
 
 # gebe nullvektor aus, der so viele einsen hat, 
 # wie es öffnungskarten + sicherungskarte gibt
