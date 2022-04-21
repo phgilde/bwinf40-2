@@ -1,5 +1,3 @@
-from re import I
-import sys
 import numpy as np
 from itertools import product
 from progressbar import progressbar
