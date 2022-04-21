@@ -95,25 +95,22 @@ Von den gegebenen $n$ Karten mit jeweils $m$ Bits werden $p$ Karten gesucht, so 
 && k_1 \xor k_2 \xor \ldots \xor k_{p-1} &= k_p && |\xor k_p \\
 \leftrightarrow && k_1 \xor k_2 \xor \ldots \xor k_{p-1} \xor k_p &= 0 &&
 \end{align*}
-Diese Gleichung lässt sich zu jeder der $p$ Karten umstellen. Es werden also $p$ Karten gesucht, deren XOR gleich einer Karte mit $m$ Nullen ist. Dieses Problem lässt sich umformulieren zu einem linearen Gleichungssystem im Galois-Feld $GF(2)$. Dieses besteht nur aus den beiden Elementen 0 und 1. Die Addition im Feld entspricht dem XOR, die Multiplikation einem UND. Weil in dem Feld Multiplikationen und Additionen definiert sind, ist lineare Algebra in dem Feld möglich. Die gemischten Karten entsprechen der Matrix $K \in GF(2)^{n \times m}$. $K_n$ ist dabei die n-te Karte und $K_{n,m}$ das m-te Bit der n-ten Karte. Gesucht wird der Vektor $v \in GF(2)^n$, so dass dieses lineare Gleichungssystem gilt:
+Diese Gleichung lässt sich zu jeder der $p$ Karten umstellen. Es werden also $p$ Karten gesucht, deren XOR gleich einer Karte mit $m$ Nullen ist. Dieses Problem lässt sich umformulieren zu einem linearen Gleichungssystem im Galois-Feld $GF(2)$. Dieses besteht nur aus den beiden Elementen 0 und 1. Die Addition im Feld entspricht dem XOR, die Multiplikation einem UND. Weil in dem Feld die Multiplikation und Addition definiert ist, können diese Operationen auch in Form von linearer Algebra verwendet werden. Die gemischten Karten entsprechen der Matrix $K \in GF(2)^{n \times m}$. $K_n$ ist dabei die n-te Karte und $K_{n,m}$ das m-te Bit der n-ten Karte. Gesucht wird der Vektor $v \in GF(2)^n$, so dass dieses lineare Gleichungssystem gilt:
 \begin{align*}
 K_{1, 1} v_1 + K_{2, 1} v_2 + \ldots + K_{n, 1} v_n &= 0 \\
 K_{1, 2} v_1 + K_{2, 2} v_2 + \ldots + K_{n, 2} v_n &= 0 \\
 \ldots \\
 K_{1, m} v_1 + K_{2, m} v_2 + \ldots + K_{n, m} v_n &= 0 \\ 
-\end{align*}
-In Matrixform:
-\begin{align*}
 K^T v = 0
 \end{align*}
 Dabei bestimmt $v_n$, ob die n-te Karte zu den gesuchten Karten gehört. \\
-Die Menge von Vektoren, die sich oben für $v$ einsetzen lassen, wird als Nullraum oder Kern der Matrix $K^T$ bezeichnet. In $GF(2)$ kann ein Vektor nicht skaliert werden, weil er nur mit entweder $0$ oder $1$ multipliziert werden kann. Somit besteht der Nullraum aus allen möglichen Kombinationen von Summen der Basisvektoren. Wenn $r$ der Rang von $K^T$ ist, dann ist $q=n-r$ die Anzahl der Basisvektoren des Nullraums. Der Rang von $K^T$ ist die Anzahl linear unabhängiger Zeilen beziehungsweise Spalten (diese beiden Werte sind gleich). Wenn, wie in der ursprünglichen Aufgabe, $n<m$, dann ist der Rang in der Regel $n-1$, denn nur eine Karte, die Wiederherstellungskarte, ist linear abhängig von den anderen. \\
+Die Menge von Vektoren, die sich oben für $v$ einsetzen lassen, wird als Nullraum oder Kern der Matrix $K^T$ bezeichnet. In $GF(2)$ kann ein Vektor nicht skaliert werden, weil er nur mit entweder $0$ oder $1$ multipliziert werden kann. Somit besteht der Nullraum aus allen möglichen Kombinationen von Summen der Basisvektoren. Wenn $r$ der Rang von $K^T$ ist, dann ist $q=n-r$ die Anzahl der Basisvektoren des Nullraums \cite[S. 63]{Axler2014}. Der Rang von $K^T$ ist die Anzahl linear unabhängiger Zeilen beziehungsweise Spalten (diese beiden Werte sind gleich). Wenn, wie in der ursprünglichen Aufgabe, $n<m$, dann ist der Rang in der Regel $n-1$, denn nur eine Karte, die Wiederherstellungskarte, ist linear abhängig von den anderen. \\
 Die Wahrscheinlichkeit, dass $h$ Karten mit jeweils $b$ Bits voneinander linear unabhängig sind, ist, wenn diese zufällig und erzeugt sind und Nullen und Einsen gleich wahrscheinlich sind, wovon der Einfachheit halber ausgegangen wird, nach \cite{WEBSITE:1} gegeben durch
 \begin{align*}
-p_h = \prod^h_{i=1} (1-2^{i-1-b})
+P(\text{''alle unabhängig''}) = \prod^h_{i=1} (1-2^{i-1-b})
 \end{align*}
-Diese ist für $h=n-1=110$ und $b=m=128$ hoch genug, um den anderen Fall zunächst außen vor zu lassen. Somit sind alle bis auf eine der $111$ Karten linear unabhängig voneinander. Der Nullraum besteht damit aus nur $q=n-(n-1)=n-n+1=1$ Vektor. Dieser muss an den Stellen der $11$ echten Karten $1$ und sonst überall $0$ sein. Somit haben wir die echten Karten gefunden. \\\\
-Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfahren verwendet. Dabei wird zuerst $K^T$ mit der Identitätsmatrix zu $\left[\frac{K^T}{I}\right]$ erweitert. $\left[\frac{K^T}{I}\right]^T=[K|I]$ wird mithilfe des Gauß-Jordan-Algorithmus in Stufenform gebracht, was dann in der sich in Stufenform befindenden Matrix $\left[\frac{B}{C}\right]^T$ resultiert. Die Matrix $\left[\frac{B}{C}\right]$ befindet sich in Spaltenstufenform. Die Basis des Nullraums bilden die Spalten von $C$, deren entsprechende Spalten in $B$ Null sind. Das lässt sich folgendermaßen begründen: Die elementaren Reihentransformationen der Transponierten entsprechen elementaren Spaltentransformationen, welche einer Multiplikation mit einer Matrix $P$ entsprechen. Diese setzt sich als Produkt der einzelnen Schritte zusammen. Bei den Schritten handelt es sich immer um die Addition einer Spalte zu einer anderen, was der Multiplikation mit einer Matrix in oberer oder unterer Dreiecksform entspricht. Beispielsweise würde eine Multiplikation mit der Matrix
+Diese ist für $h=n-1=110$ und $b=m=128$ hoch genug, um den anderen Fall zunächst zu vernachlässigen. Somit sind alle bis auf eine der $111$ Karten linear unabhängig voneinander. Der Nullraum besteht damit aus nur $q=n-(n-1)=n-n+1=1$ Vektor. Dieser muss an den Stellen der $11$ echten Karten $1$ und sonst überall $0$ sein. Somit haben wir die echten Karten gefunden. \\\\
+Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfahren verwendet. Dabei wird zuerst $K^T$ mit der Identitätsmatrix zu $\left[\frac{K^T}{I}\right]$ erweitert. $\left[\frac{K^T}{I}\right]^T=[K|I]$ wird mithilfe des Gauß-Jordan-Algorithmus in Stufenform gebracht, was dann in der sich in Stufenform befindenden Matrix $\left[\frac{B}{C}\right]^T$ resultiert. Die Matrix $\left[\frac{B}{C}\right]$ befindet sich in Spaltenstufenform. Die Basis des Nullraums bilden die Spalten von $C$, deren entsprechende Spalten in $B$ Null sind. Das lässt sich folgendermaßen begründen: Die elementaren Reihentransformationen der Transponierten, die beim Gauß-Jordan-Algorithmus durchgeführt werden, entsprechen elementaren Spaltentransformationen, welche einer Multiplikation mit einer Matrix $P$ entsprechen. Diese setzt sich als Produkt der einzelnen Schritte zusammen. Bei den Schritten handelt es sich immer um die Addition einer Spalte zu einer anderen, was der Multiplikation mit einer Elementarmatrix entspricht. Beispielsweise würde eine Multiplikation mit der Matrix
 \begin{align*}
 \left[\begin{array}{ccc}
 1 & 1 & 0 \\
@@ -121,17 +118,18 @@ Um die Basisvektoren zu finden, wird das in \cite{WEBSITE:2} beschriebene Verfah
 0 & 0 & 1 \\
 \end{array}\right]
 \end{align*}
-die erste Spalte zur zweiten addieren. Da diese Matrizen immer in Dreiecksform sind, weil sie neben der Diagonalen nur eine Element enthalten, sind sie immer invertierbar. Somit ist $P$ als Produkt von invertierbaren Matrizen auch invertierbar. \\
+die erste Spalte zur zweiten addieren. Da es sich um Elementarmatrizen handelt, sind diese immer invertierbar. Somit ist $P$ als Produkt von invertierbaren Matrizen auch invertierbar. \\
 Es gilt also $\left[\frac{K^T}{I}\right] P = \left[\frac{B}{C}\right]$. Daraus folgt $I P = P = C$ und $K^T P = K^T C = B$.
 \begin{align*}
 && K^T C &= B  &&|\cdot C^{-1}\\
 \leftrightarrow && K^T &= BC^{-1} &&|\cdot v \\
 \leftrightarrow && K^T v &= BC^{-1} v && | \text{Es wird $C^{-1}v = w$ gesetzt}\\
-&& &= Bw && | \text{Damit $v$ zum Nullraum gehört, wird verlangt:}\\
+&& &= Bw && | \text{Damit $v$ zum Nullraum gehört, muss gelten:}\\
 && &= 0 
 \end{align*}
 Weil alle Spalten in $B$, die nicht Null sind, linear unabhängig voneinander sind (das ist eine Folge der Spaltenstufenform), gilt $Bw=0$ nur wenn die Einträge von $w$, die nicht Null sind, den Nullspalten von $B$ entsprechen. Die Basis der Vektoren $w$, für die $Bw=0$ gilt, sind also die verschiedenen Vektoren, die eine Eins bei einer Nullspalte von $B$ und sonst überall Nullen haben. Da $C^{-1} v = w \leftrightarrow v = C w$ definiert wurde, sind die Spalten von $C$, die den Nullspalten von $B$ entsprechen, die Basis des Nullraums. \\
-Das Verfahren soll an einem Beispiel illustriert werden:
+Der Gauß-Jordan-Algorithmus bringt eine (erweiterte) Matrix in reduzierte Stufenform. Das bedeutet, dass das erste nicht-Null-Element in jeder Reihe auch das einzige nicht-Null-Element in seiner jeweiligen Spalte ist. Dadurch kann diese Reihe nicht als Linearkombination der anderen Reihen dargestellt werden und ist somit linear unabhängig. Das erste nicht-Null-Element einer Reihe befindet sich außerdem immer weiter hinten als das der vorhergehenden Reihen. Das alles wird bewerkstelligt, in dem nacheinander verschiedene Reihen zueinander addiert werden. In dem man eine Reihe, deren erstes Element noch nicht als einziges Eins ist, zu den anderen Reihen addiert, in denen dieses Element auch Eins ist, macht man aus diesen Null. 
+Das ganze Verfahren soll an einem Beispiel illustriert werden:
 \begin{align*}
 K &= \left[ \begin{array}{cccccc}
 0 & 1 & 0 & 0 & 1 & 1 \\
@@ -234,7 +232,7 @@ So wird auch in der vierten und fünften Spalte weitergemacht:
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
 \end{array} \right]
 \end{align*}
-Die Matrix befindet sich jetzt in Stufenform, es handelt sich um $\left[\frac{B}{C}\right]^T$. Somit ist
+Die Matrix befindet sich jetzt in Stufenform, es handelt sich um $\left[\frac{B}{C}\right]^T$. Durch Transponieren erhält man:
 \begin{align*}
 \left[\frac{B}{C}\right]&=\left[ \begin{array}{cccccc}
 1 & 0 & 0 & 0 & 0 & 0 \\
@@ -264,13 +262,13 @@ Wie man sieht, ist jede der Karten das XOR der anderen beiden, und die Lösung s
 Wenn $q>1$ ist, kann es sein, dass keiner der Basisvektoren des Nullraums 11 Einsen beinhaltet, sondern eine Linearkombination dieser. In diesem Fall wird jede der $2^q$ Kombinationen der Basisvektoren durchprobiert, bis eine davon $11$ Eisen enthält.\\\\
 Die richtige Karte für das $s$-te Haus kann gefunden werden, in dem man die Karten aufsteigend sortiert und zuerst die $s$-te und dann die $s+1$-te Karte ausprobiert. Wenn die Sicherungskarte kleiner als die Öffnungskarte des $s$-ten Hauses ist, liegt sie davor im Stapel und die Öffnungskarte an der Stelle $s+1$. Wenn sie größer ist, dann liegt sie dahinter im Stapel und die Öffnungskarte an Stelle $s$.\\
 \\
-Das Verfahren stößt an seine Grenzen, wenn $n>m$ ist. Der Rang von $K^T$ ist dann nämlich höchstens $m$, wodurch der Nullraum $q=n-m$ Basisvektoren hat. Diese Basisvektoren müssen nun nicht zwangsweise einen mit 11 Einsen beinhalten, dieser könnte auch eine Linearkombination der anderen Basisvektoren sein. Wenn das der Fall ist, müsste man alle $2^q$ Kombinationen von Basisvektoren durchprobieren, bis eine davon $11$ Einsen beinhaltet, was für die Beispieleingabe auf der BwInf-Webseite mit $161$ Karten zu je $128$ Bit $2^q=2^{n-m}=2^{161-128}=2^{33}=8.589.934.592$ Kombinationen sind. Diese lassen sich nicht wirklich in überschaubarer Zeit durchprobieren.
+Das Verfahren stößt an seine Grenzen, wenn $n \gg m$ ist. Der Rang von $K^T$ ist dann nämlich höchstens $m$, wodurch der Nullraum $q=n-m$ Basisvektoren hat. Diese Basisvektoren müssen nun nicht zwangsweise einen mit 11 Einsen beinhalten, dieser könnte auch eine Linearkombination der anderen Basisvektoren sein. Wenn das der Fall ist, müsste man alle $2^q$ Kombinationen von Basisvektoren durchprobieren, bis eine davon $11$ Einsen beinhaltet, was für die Beispieleingabe auf der BwInf-Webseite mit $161$ Karten zu je $128$ Bit $2^q=2^{n-m}=2^{161-128}=2^{33}=8.589.934.592$ Kombinationen sind. Diese lassen sich nicht wirklich in überschaubarer Zeit durchprobieren.
 \section{Umsetzung}
-Die Lösung wurde in Python 3.10 umgesetzt. Dabei wurde die Bibliothek \lstinline|NumPy| verwendet, um die Matrizen darzustellen. Für eine Fortschrittsanzeige wurde die Bibliothek \lstinline|progressbar2| verwendet. Wenn das Programm aufgerufen wird, muss zuerst der Dateipfad zur Eingabedatei im Format wie auf der BwInf-Webseite eingegeben werden. Dann werden die echten Karten gesucht und ausgegeben.
+Die Lösung wurde in Python 3.10 umgesetzt. Dabei wurde die Bibliothek \lstinline|NumPy| verwendet, um die Matrizen darzustellen. Für eine Fortschrittsanzeige beim Zeitaufwendigen durchprobieren der $2^q$ Linearkombinationen wurde die Bibliothek \lstinline|progressbar2| verwendet. Wenn das Programm aufgerufen wird, muss zuerst der Dateipfad zur Eingabedatei im Format wie auf der BwInf-Webseite eingegeben werden. Dann werden die echten Karten gesucht und ausgegeben.
 \section{Laufzeit}
-Der Gauß-Jordan-Algorithmus hat für eine erweiterte Matrix mit $u$ Spalten in der linken und $v$ Spalten in der rechten Matrix und $w$ Reihen eine Laufzeitordnung von $\mathcal{O}(wu(u+v))$, denn für jede der $u$ Spalten der linken Matrix muss eine Reihe zu allen $w$ anderen Reihen XOR-t werden, also mit allen $u+v$ Elementen jeder Reihe. Weil die rechte Matrix eine Identitätsmatrix ist, hat diese so viele Reihen wie Spalten, also $w$ Reihen und $w$ Spalten. Somit ist $v=w$ und die Laufzeitordnung $\mathcal{O}(wu(u+w))=\mathcal{O}(wu^2+uw^2)$. Die Matrix $K^T$, für die der Algorithmus durchgeführt wird, hat die Dimensionen $n \times m$. Die Laufzeit ist somit $\mathcal{O}(mn^2+nm^2)$. Wenn keiner der gefundenen Basisvektoren die richtige Anzahl an Einsen enthält, müssen alle $2^q$ Kombinationen durchprobiert werden.
+Der Gauß-Jordan-Algorithmus hat für eine erweiterte Matrix mit $u$ Spalten in der linken und $v$ Spalten in der rechten Matrix und $w$ Reihen eine Laufzeitordnung von $\mathcal{O}(wu(u+v))$, denn für jede der $u$ Spalten der linken Matrix muss eine Reihe zu allen $w$ anderen Reihen XOR-t werden, also mit allen $u+v$ Elementen jeder Reihe. Weil die rechte Matrix eine Identitätsmatrix ist, hat diese so viele Reihen wie Spalten, also $w$ Reihen und $w$ Spalten. Somit ist $v=w$ und die Laufzeitordnung $\mathcal{O}(wu(u+w))=\mathcal{O}(wu^2+uw^2)$. Die Matrix $K^T$, für die der Algorithmus durchgeführt wird, hat die Dimensionen $n \times m$. Die Laufzeit ist somit $\mathcal{O}(mn^2+nm^2)$. Wenn keiner der gefundenen Basisvektoren die richtige Anzahl an Einsen enthält, müssen alle $2^q$ Kombinationen durchprobiert werden. Dieser Schritt hat dann also die Laufzeit $2^q$.
 \section{Beispiele}
-Die Beispieldateien wurden der Übersichtlichkeit halber hier weggelassen, sie sind im Ordner \lstinline|beispiele| zu finden. Wie erklärt, konnten die schweren Eingaben nicht gelöst werden.\\
+Die Eingabedateien wurden der Übersichtlichkeit halber hier weggelassen, sie sind im Ordner \lstinline|beispiele| zu finden. Wie erklärt, konnten die schweren Eingaben nicht gelöst werden.\\
 Beispiel 1: \\
 Eingabe:
 \begin{lstlisting}
