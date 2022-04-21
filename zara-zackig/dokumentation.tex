@@ -266,11 +266,96 @@ Die richtige Karte für das $s$-te Haus kann gefunden werden, in dem man die Kar
 \\
 Das Verfahren stößt an seine Grenzen, wenn $n>m$ ist. Der Rang von $K^T$ ist dann nämlich höchstens $m$, wodurch der Nullraum $q=n-m$ Basisvektoren hat. Diese Basisvektoren müssen nun nicht zwangsweise einen mit 11 Einsen beinhalten, dieser könnte auch eine Linearkombination der anderen Basisvektoren sein. Wenn das der Fall ist, müsste man alle $2^q$ Kombinationen von Basisvektoren durchprobieren, bis eine davon $11$ Einsen beinhaltet, was für die Beispieleingabe auf der BwInf-Webseite mit $161$ Karten zu je $128$ Bit $2^q=2^{n-m}=2^{161-128}=2^{33}=8.589.934.592$ Kombinationen sind. Diese lassen sich nicht wirklich in überschaubarer Zeit durchprobieren.
 \section{Umsetzung}
-Die Lösung wurde in Python umgesetzt. Dabei wurde die Bibliothek \lstinline|NumPy| verwendet, um die Matrizen darzustellen. 
+Die Lösung wurde in Python 3.10 umgesetzt. Dabei wurde die Bibliothek \lstinline|NumPy| verwendet, um die Matrizen darzustellen. Für eine Fortschrittsanzeige wurde die Bibliothek \lstinline|progressbar2| verwendet. Wenn das Programm aufgerufen wird, muss zuerst der Dateipfad zur Eingabedatei im Format wie auf der BwInf-Webseite eingegeben werden. Dann werden die echten Karten gesucht und ausgegeben.
 \section{Laufzeit}
-Der Gauß-Jordan-Algorithmus hat für eine erweiterte Matrix mit $u$ Spalten in der linken und $v$ Spalten in der rechten Matrix und $w$ Reihen eine Laufzeitordnung von $\mathcal{O}(wu(u+v))$, denn für jede der $u$ Spalten der linken Matrix muss eine Reihe zu allen $w$ anderen Reihen XOR-t werden, also mit allen $u+v$ Elementen jeder Reihe. Weil die rechte Matrix eine Identitätsmatrix ist, hat diese so viele Reihen wie Spalten, also $w$ Reihen und $w$ Spalten. Somit ist $v=w$ und die Laufzeitordnung $\mathcal{O}(wu(u+w))=\mathcal{O}(wu^2+uw^2)$. Die Matrix $K^T$, für die der Algorithmus durchgeführt wird, hat die Dimensionen $m \times n$. 
+Der Gauß-Jordan-Algorithmus hat für eine erweiterte Matrix mit $u$ Spalten in der linken und $v$ Spalten in der rechten Matrix und $w$ Reihen eine Laufzeitordnung von $\mathcal{O}(wu(u+v))$, denn für jede der $u$ Spalten der linken Matrix muss eine Reihe zu allen $w$ anderen Reihen XOR-t werden, also mit allen $u+v$ Elementen jeder Reihe. Weil die rechte Matrix eine Identitätsmatrix ist, hat diese so viele Reihen wie Spalten, also $w$ Reihen und $w$ Spalten. Somit ist $v=w$ und die Laufzeitordnung $\mathcal{O}(wu(u+w))=\mathcal{O}(wu^2+uw^2)$. Die Matrix $K^T$, für die der Algorithmus durchgeführt wird, hat die Dimensionen $n \times m$. Die Laufzeit ist somit $\mathcal{O}(mn^2+nm^2)$. Wenn keiner der gefundenen Basisvektoren die richtige Anzahl an Einsen enthält, müssen alle $2^q$ Kombinationen durchprobiert werden.
 \section{Beispiele}
-
+Die Beispieldateien wurden der Übersichtlichkeit halber hier weggelassen, sie sind im Ordner \lstinline|beispiele| zu finden. Wie erklärt, konnten die schweren Eingaben nicht gelöst werden.\\
+Beispiel 1: \\
+Eingabe:
+\begin{lstlisting}
+beispiele/stapel0.txt
+\end{lstlisting}
+Ausgabe:
+\begin{lstlisting}
+Echte Karten:
+[[0 0 1 1 1 1 0 1 0 1 0 1 1 1 0 0 0 1 1 0 1 0 0 1 1 0 0 1 1 0 0 1] 
+ [1 1 1 1 1 1 1 0 0 0 1 0 1 1 0 1 0 0 0 1 0 0 0 0 0 0 1 1 0 1 1 1] 
+ [1 1 0 1 0 1 1 1 1 1 1 0 1 0 1 1 1 1 0 1 1 0 1 1 1 1 1 1 0 0 0 0] 
+ [1 0 1 0 1 1 0 0 1 1 1 1 1 1 0 1 1 0 1 0 1 0 0 0 1 1 1 0 0 0 0 0] 
+ [1 0 1 1 1 0 0 0 0 1 1 0 0 1 1 1 0 0 0 0 1 0 1 0 1 0 1 1 1 1 1 0]]
+\end{lstlisting}
+Beispiel 2: \\
+Eingabe:
+\begin{lstlisting}
+beispiele/stapel1.txt
+\end{lstlisting}
+Ausgabe:
+\begin{lstlisting}
+Echte Karten:
+[[0 0 1 0 0 0 0 0 1 1 1 1 0 0 1 1 1 1 1 0 1 1 1 1 0 1 1 1 1 1 0 0]
+ [1 1 0 1 0 0 1 1 0 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 1 0 1 1 1]
+ [0 0 1 1 0 1 0 0 0 0 1 0 1 0 1 0 0 1 0 0 0 0 1 1 1 1 0 1 0 0 1 0]
+ [1 1 1 1 0 0 1 1 1 0 1 0 1 1 0 0 1 0 0 1 0 0 0 0 1 0 1 1 1 1 1 0]
+ [0 0 1 1 0 1 1 0 0 0 0 1 1 0 1 0 1 1 0 1 0 1 1 1 1 1 1 1 1 0 1 0]
+ [1 1 1 1 0 1 1 1 1 0 0 1 0 0 0 1 0 1 0 0 1 0 0 0 0 1 0 0 1 1 1 0]
+ [0 0 1 0 0 0 1 1 1 0 0 1 1 1 0 1 1 0 1 0 1 1 1 0 1 1 1 0 0 0 1 1]
+ [1 1 0 0 0 1 1 1 1 1 1 0 1 0 1 1 0 1 0 0 0 0 0 1 0 1 1 1 0 1 0 0]
+ [0 0 0 1 0 0 0 1 1 1 0 1 0 0 1 1 0 0 0 1 1 1 1 1 0 1 1 0 0 1 0 0]]
+\end{lstlisting}
+Beispiel 3: \\
+Eingabe:
+\begin{lstlisting}
+beispiele/stapel2.txt
+\end{lstlisting}
+Ausgabe:
+\begin{lstlisting}
+Echte Karten: 
+[[0 1 1 0 1 0 1 1 1 0 1 0 0 0 1 1 0 1 1 1 0 1 0 0 0 1 1 0 0 0 0 1 1 1 0 0
+  0 0 0 1 1 0 0 0 1 1 0 1 0 1 1 0 0 0 1 0 1 1 1 0 1 1 1 0 0 1 1 0 0 1 1 0
+  1 1 1 1 0 1 1 1 0 1 1 1 0 0 1 1 0 1 0 1 1 0 1 1 1 1 0 0 0 0 1 1 1 1 0 1
+  1 1 0 1 1 1 0 1 0 1 1 1 1 1 1 0 0 1 1 1]
+ [0 0 1 0 1 0 1 1 1 1 1 0 0 0 1 0 1 0 1 1 0 1 0 1 1 0 1 1 1 1 0 0 1 0 0 1
+  1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 1 0 0 1 1 0 0 1 1 1 1 0 1 1 0 0 1 0 1 1 0
+  0 1 0 0 0 0 1 0 0 0 1 1 0 1 0 1 0 1 1 0 1 1 0 0 1 0 1 0 1 1 1 0 1 0 0 1
+  0 0 0 0 1 0 1 1 1 0 0 0 1 1 0 1 0 0 0 1]
+ [1 0 1 0 1 0 1 1 0 0 0 0 0 1 1 0 1 1 0 0 0 0 0 1 0 1 1 1 1 1 1 1 1 1 0 0
+  1 1 0 0 0 1 1 0 0 1 1 1 0 0 1 0 1 0 1 1 0 1 1 1 1 1 0 1 1 0 0 0 1 1 1 1
+  1 1 1 0 1 1 1 1 1 0 1 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 1 0 1 1 0 1 1 0
+  1 1 1 1 1 1 1 1 0 1 0 0 1 1 0 1 1 1 1 0]
+ [1 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 1 1 0 0 1 1 0 0 1 0 0 0 1 1 0 0 0 0 0
+  0 0 0 0 0 1 0 1 0 1 0 1 1 0 1 0 0 1 0 0 1 0 0 0 0 1 0 0 0 1 1 1 0 1 0 1
+  1 0 1 1 0 1 0 1 0 1 0 0 1 0 1 0 1 0 0 0 1 0 1 1 1 0 1 0 1 1 0 0 1 0 1 0
+  0 0 1 1 0 0 1 0 1 0 0 1 0 0 1 1 1 0 1 1]
+ [0 0 1 0 1 0 0 0 0 1 1 0 0 0 0 1 0 0 1 0 1 1 1 0 1 1 1 0 1 0 1 1 0 1 1 0
+  1 0 1 1 1 0 0 0 1 0 0 1 0 0 1 1 0 1 0 1 1 1 1 0 1 1 0 1 1 1 1 0 1 1 1 1
+  0 0 1 0 1 1 0 0 0 0 1 0 0 1 1 1 0 0 1 0 1 0 0 0 0 1 1 0 1 0 0 1 1 1 0 0
+  0 1 0 0 0 1 0 0 0 1 0 0 1 1 1 1 1 1 0 0]
+ [1 1 0 0 0 0 1 1 0 0 0 1 0 0 1 1 0 1 1 1 0 0 0 1 0 1 1 0 0 1 0 0 1 0 1 1
+  0 1 0 1 0 1 1 0 0 1 1 0 1 1 0 1 0 1 0 1 1 0 1 0 0 1 0 0 0 0 1 1 1 1 0 1
+  0 0 0 1 0 0 0 1 0 0 1 0 1 0 0 0 0 1 1 0 0 1 0 1 0 1 0 1 0 0 1 0 0 0 1 1
+  0 0 0 1 0 0 0 1 1 0 1 1 1 0 1 0 0 0 0 0]
+ [1 0 1 0 1 1 1 1 1 1 0 0 1 0 0 1 0 0 1 0 1 0 0 1 1 1 1 0 1 1 0 0 0 1 0 0
+  1 1 1 1 1 0 0 0 0 1 0 1 0 1 0 0 1 1 0 0 1 0 0 0 0 1 1 1 1 0 0 0 1 0 0 0
+  1 0 0 1 0 0 1 0 0 1 1 0 1 0 0 1 0 1 0 1 0 1 1 1 1 1 1 0 1 0 1 1 0 0 0 0
+  0 1 1 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 1 1]
+ [1 1 0 1 1 1 1 0 0 0 0 1 0 1 0 0 1 1 0 1 1 1 1 1 0 0 1 1 0 0 0 0 1 1 1 0
+  1 0 0 1 1 0 1 1 1 0 1 1 1 1 0 1 0 1 1 1 1 1 0 1 1 0 1 1 0 1 1 1 0 1 1 0
+  1 0 0 0 1 0 0 1 1 0 1 1 0 1 1 0 0 1 1 1 0 1 0 0 0 1 0 0 0 0 1 1 0 0 0 0
+  0 1 0 1 0 1 1 1 1 0 0 1 0 1 1 1 1 1 1 1]
+ [0 1 1 0 1 0 0 1 0 0 1 0 1 1 0 0 0 1 0 1 0 0 1 1 1 1 1 1 1 1 0 1 0 1 1 0
+  0 0 0 0 1 0 0 0 1 0 1 1 0 0 1 1 1 0 1 0 1 0 0 1 0 1 0 1 1 0 1 1 0 0 0 1
+  0 0 0 0 0 0 0 1 1 0 0 0 0 1 1 0 0 0 1 1 0 1 0 1 1 0 1 0 1 0 1 1 1 1 0 1
+  1 0 1 0 0 0 0 0 1 0 0 1 0 1 0 0 1 0 1 1]
+ [0 1 1 1 0 1 1 0 0 1 1 1 1 0 0 0 1 1 1 0 0 1 1 1 1 0 0 0 1 1 0 1 1 0 1 1
+  1 0 1 0 0 1 0 1 0 0 0 0 0 0 1 0 0 0 0 0 1 0 1 1 0 0 0 0 1 0 1 0 0 0 1 1
+  1 0 1 0 1 0 0 0 0 0 0 0 1 1 0 1 0 0 1 1 0 0 0 0 1 1 0 1 0 0 1 0 1 1 0 1
+  1 0 1 0 0 1 0 1 1 1 1 1 0 1 1 0 1 0 0 0]
+ [1 1 1 0 1 1 1 0 1 0 1 0 1 1 1 0 0 1 1 1 1 0 1 1 1 1 0 0 0 1 1 1 0 0 1 1
+  0 1 1 1 1 0 1 1 0 1 0 1 0 1 0 1 1 1 1 1 0 0 0 1 1 0 1 0 0 0 1 1 0 1 0 0
+  0 1 1 0 0 0 0 0 1 1 1 1 0 1 0 0 0 0 1 0 0 0 1 1 0 0 1 0 0 0 0 0 0 1 1 1
+  0 1 1 0 0 0 1 0 0 0 1 0 1 1 1 0 1 0 0 0]]
+\end{lstlisting}
 \section{Quellcode}
 
 \lstinputlisting[language=python]{zara-zackig.py}
